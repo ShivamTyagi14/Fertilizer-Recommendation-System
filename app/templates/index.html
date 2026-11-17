@@ -1,0 +1,1009 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartFert | Fertilizer Recommendation & Soil Health</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           1. GLOBAL SETTINGS
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-green: #062b1c;
+            --forest-green: #0b422b;
+            --leaf-green: #8ee34e;
+            --lime: #b9f36b;
+            --cream: #f5f2df;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            color: white;
+            background: var(--deep-green);
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           2. FARM BACKGROUND
+        ========================================= */
+
+        .landing-page {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(2, 28, 18, 0.88) 0%,
+                    rgba(3, 35, 22, 0.70) 38%,
+                    rgba(3, 35, 22, 0.32) 65%,
+                    rgba(3, 25, 17, 0.12) 100%
+                ),
+                linear-gradient(
+                    0deg,
+                    rgba(2, 25, 16, 0.90) 0%,
+                    transparent 65%
+                ),
+                url("{{ url_for('static', filename='images/tractor-working-green-field.jpg') }}");
+
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+
+            animation: backgroundReveal 1.8s ease both;
+        }
+
+        .landing-page::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    ellipse at 55% 25%,
+                    rgba(177, 230, 106, 0.10),
+                    transparent 48%
+                );
+
+            pointer-events: none;
+        }
+
+        /* =========================================
+           3. NAVIGATION BAR
+        ========================================= */
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+
+            width: min(94%, 1450px);
+            margin: 16px auto 0;
+
+            min-height: 65px;
+            padding: 11px 26px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border: 1px solid rgba(206, 242, 180, 0.24);
+            border-radius: 20px;
+
+            background: rgba(3, 35, 24, 0.70);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+            animation: navAppear 1s ease both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 27px;
+            color: var(--leaf-green);
+        }
+
+        .brand-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-name span {
+            color: var(--leaf-green);
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 28px;
+            background: rgba(255,255,255,0.3);
+            margin: 0 22px;
+        }
+
+        .nav-center {
+            flex: 1;
+            text-align: center;
+            color: #edf5e9;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-tagline {
+            border: 1px solid rgba(171, 235, 108, 0.3);
+            padding: 9px 15px;
+            border-radius: 30px;
+
+            color: #e4f4d7;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .nav-tagline span {
+            color: var(--lime);
+        }
+
+        /* =========================================
+           4. HERO SECTION
+        ========================================= */
+
+        .hero {
+            position: relative;
+            z-index: 2;
+
+            text-align: center;
+
+            width: min(95%, 1100px);
+            margin: 0 auto;
+
+            padding-top: clamp(35px, 5vh, 60px);
+        }
+
+        .hero-leaf {
+            color: var(--leaf-green);
+            font-size: 32px;
+            margin-bottom: 8px;
+
+            animation: leafFloat 3s ease-in-out infinite;
+        }
+
+        .hero-eyebrow {
+            color: #c8ef9e;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            margin-bottom: 14px;
+
+            opacity: 0;
+            animation: riseIn 0.9s 0.2s ease forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+
+            font-size: clamp(34px, 4.5vw, 62px);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -2px;
+
+            color: #fffdf0;
+
+            text-shadow: 0 5px 30px rgba(0,0,0,0.30);
+
+            opacity: 0;
+            animation: riseIn 1s 0.35s ease forwards;
+        }
+
+        .hero h1 .highlight {
+            color: var(--leaf-green);
+            text-shadow: 0 0 30px rgba(142, 227, 78, 0.28);
+        }
+
+        .hero-description {
+            margin-top: 15px;
+
+            font-size: clamp(13px, 1.5vw, 17px);
+            color: #f2f5e8;
+            font-weight: 500;
+            letter-spacing: 1px;
+
+            opacity: 0;
+            animation: riseIn 1s 0.55s ease forwards;
+        }
+
+        /* =========================================
+           5. SERVICE CARDS
+        ========================================= */
+
+        .services {
+            position: relative;
+            z-index: 3;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 28px;
+
+            width: min(94%, 760px);
+            margin: 36px auto 0;
+
+            padding-bottom: 22px;
+        }
+
+        .service-card {
+            position: relative;
+
+            width: 350px;
+            min-height: 285px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 25px 23px;
+
+            border-radius: 25px;
+            overflow: visible;
+
+            text-decoration: none;
+            color: var(--deep-green);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 238, 0.97),
+                    rgba(211, 235, 177, 0.94)
+                );
+
+            border: 2px solid rgba(221, 255, 177, 0.75);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.25),
+                0 0 20px rgba(166, 232, 92, 0.12);
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+
+            opacity: 0;
+        }
+
+        .fertilizer-card {
+            animation: cardAppear 0.9s 0.8s ease forwards;
+        }
+
+        .soil-card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(8, 65, 40, 0.97),
+                    rgba(3, 37, 24, 0.98)
+                );
+
+            color: #f8f9e9;
+
+            border-color: rgba(174, 235, 108, 0.6);
+
+            animation: cardAppear 0.9s 1.05s ease forwards;
+        }
+
+        .service-card:hover {
+            transform: translateY(-9px) scale(1.02);
+
+            box-shadow:
+                0 25px 55px rgba(0,0,0,0.32),
+                0 0 30px rgba(174, 238, 93, 0.35);
+
+            border-color: var(--lime);
+        }
+
+        .card-icon {
+            font-size: 53px;
+            line-height: 1;
+            margin-bottom: 17px;
+
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover .card-icon {
+            transform: translateY(-5px) scale(1.10);
+        }
+
+        .service-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            line-height: 1.2;
+            font-weight: 800;
+            margin-bottom: 11px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            line-height: 1.55;
+            max-width: 260px;
+            opacity: 0.88;
+        }
+
+        /* =========================================
+           6. BUTTONS
+        ========================================= */
+
+        .card-button {
+            margin-top: 21px;
+
+            min-width: 190px;
+            padding: 12px 20px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+
+            border-radius: 40px;
+
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+
+            text-decoration: none;
+            color: white;
+
+            background: linear-gradient(110deg, #0b4b2d, #176b3b);
+
+            box-shadow: 0 7px 22px rgba(5, 61, 33, 0.25);
+
+            transition: 0.35s ease;
+        }
+
+        .soil-card .card-button {
+            background: var(--lime);
+            color: #12351f;
+        }
+
+        .card-button span {
+            font-size: 19px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .card-button {
+            transform: scale(1.04);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.22);
+        }
+
+        .service-card:hover .card-button span {
+            transform: translateX(5px);
+        }
+
+        /* =========================================
+           7. FARMER HOVER EFFECT
+        ========================================= */
+
+        .farmer-peek {
+            position: absolute;
+            z-index: 5;
+
+            bottom: 12px;
+            left: -105px;
+
+            line-height: 1;
+
+            opacity: 0;
+            transform: translateX(25px) scale(0.8);
+
+            pointer-events: none;
+
+            filter: drop-shadow(0 8px 10px rgba(0,0,0,0.3));
+
+            transition:
+                opacity 0.4s ease,
+                transform 0.5s ease;
+        }
+
+        /* Farmer PNG image size */
+
+        .farmer-peek img {
+            width: 130px;
+            height: 160px;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Soil card farmer appears on the right */
+
+        .soil-card .farmer-peek {
+            left: auto;
+            right: -105px;
+
+            transform: translateX(-25px) scale(0.8);
+        }
+
+        /* Show farmer on hover */
+
+        .service-card:hover .farmer-peek {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        /* =========================================
+           SPEECH BUBBLES
+        ========================================= */
+
+        .farmer-message {
+            position: absolute;
+            z-index: 6;
+
+            bottom: 145px;
+            left: -115px;
+
+            width: 155px;
+
+            padding: 12px 14px;
+
+            border-radius: 15px 15px 15px 3px;
+
+            background: #fffdf0;
+            color: #16472d;
+
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.4;
+
+            text-align: center;
+
+            opacity: 0;
+            transform: translateY(10px) scale(0.8);
+
+            pointer-events: none;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+
+            transition: all 0.4s ease;
+        }
+
+        .soil-card .farmer-message {
+            left: auto;
+            right: -115px;
+
+            border-radius: 15px 15px 3px 15px;
+        }
+
+        .service-card:hover .farmer-message {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .farmer-message::after {
+            content: "";
+            position: absolute;
+            bottom: -9px;
+            left: 15px;
+
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #fffdf0 transparent transparent;
+        }
+
+        .soil-card .farmer-message::after {
+            left: auto;
+            right: 15px;
+        }
+
+        /* =========================================
+           8. BOTTOM FEATURE STRIP
+        ========================================= */
+
+        .feature-strip {
+            position: relative;
+            z-index: 4;
+
+            width: min(92%, 760px);
+            margin: 0 auto;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 12px;
+
+            padding: 17px 16px;
+
+            border-radius: 20px 20px 0 0;
+
+            background: rgba(2, 31, 20, 0.82);
+            backdrop-filter: blur(16px);
+
+            border: 1px solid rgba(165, 225, 113, 0.2);
+            border-bottom: none;
+
+            opacity: 0;
+            animation: riseIn 1s 1.4s ease forwards;
+        }
+
+        .feature {
+            flex: 1;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            padding: 4px 8px;
+        }
+
+        .feature + .feature {
+            border-left: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            color: var(--lime);
+        }
+
+        .feature-text {
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #f3f5e9;
+        }
+
+        /* =========================================
+           9. FOOTER
+        ========================================= */
+
+        .footer {
+            position: relative;
+            z-index: 3;
+
+            text-align: center;
+            padding: 19px 15px 15px;
+
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-style: italic;
+
+            color: #e5f0d5;
+            letter-spacing: 1px;
+
+            opacity: 0;
+            animation: riseIn 1s 1.6s ease forwards;
+        }
+
+        .footer-line {
+            display: inline-block;
+            width: 45px;
+            height: 1px;
+            vertical-align: middle;
+            margin: 0 12px;
+
+            background: rgba(178, 232, 112, 0.6);
+        }
+
+        /* =========================================
+           10. ANIMATIONS
+        ========================================= */
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes navAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundReveal {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes leafFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-4deg);
+            }
+
+            50% {
+                transform: translateY(-7px) rotate(4deg);
+            }
+        }
+
+        /* =========================================
+           11. TABLET RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .services {
+                gap: 18px;
+            }
+
+            .service-card {
+                width: 50%;
+                min-height: 275px;
+                padding: 24px 17px;
+            }
+
+            .service-card h2 {
+                font-size: 21px;
+            }
+
+            .farmer-peek img {
+                width: 105px;
+                height: 140px;
+            }
+
+            .farmer-peek {
+                left: -65px;
+            }
+
+            .soil-card .farmer-peek {
+                right: -65px;
+            }
+        }
+
+        /* =========================================
+           12. MOBILE RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .landing-page {
+                background-position: center;
+            }
+
+            .navbar {
+                width: 92%;
+                padding: 10px 15px;
+                min-height: 58px;
+            }
+
+            .brand-name {
+                font-size: 21px;
+            }
+
+            .brand-icon {
+                font-size: 24px;
+                width: 30px;
+            }
+
+            .nav-divider,
+            .nav-center {
+                display: none;
+            }
+
+            .nav-tagline {
+                font-size: 10px;
+                padding: 8px 10px;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .hero h1 {
+                font-size: 37px;
+                letter-spacing: -1.5px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .services {
+                flex-direction: column;
+                gap: 23px;
+                margin-top: 30px;
+            }
+
+            .service-card {
+                width: 88%;
+                max-width: 350px;
+                min-height: 270px;
+                padding: 25px 18px;
+            }
+
+            .farmer-peek,
+            .farmer-message {
+                display: none;
+            }
+
+            .feature-strip {
+                width: 92%;
+                flex-wrap: wrap;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .feature {
+                min-width: 40%;
+            }
+
+            .feature:nth-child(3) {
+                border-left: none;
+            }
+
+            .feature-text {
+                font-size: 11px;
+            }
+
+            .footer {
+                font-size: 13px;
+            }
+
+            .footer-line {
+                width: 20px;
+                margin: 0 7px;
+            }
+        }
+
+        /* =========================================
+           13. REDUCED MOTION
+        ========================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="landing-page">
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+            <div class="brand-icon">🌿</div>
+
+            <div class="brand-name">
+                Smart<span>Fert</span>
+            </div>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <div class="nav-center">
+            SMART AGRICULTURE PLATFORM
+        </div>
+
+        <div class="nav-tagline">
+            <span>🌱</span> Grow Smarter · Farm Better
+        </div>
+
+    </nav>
+
+
+    <!-- HERO SECTION -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-leaf">🌱</div>
+
+            <p class="hero-eyebrow">
+                SMART AGRICULTURE · SMARTER FUTURE
+            </p>
+
+            <h1>
+                Fertilizer Recommendation<br>
+                &amp; <span class="highlight">Soil Health Analyser</span>
+            </h1>
+
+            <p class="hero-description">
+                Smart Farming. Healthier Soil. Higher Yield.
+            </p>
+
+        </section>
+
+
+        <!-- TWO MAIN OPTIONS -->
+
+        <section class="services">
+
+            <!-- FERTILIZER RECOMMENDATION -->
+
+            <a href="{{ url_for('recommend_form') }}"
+               class="service-card fertilizer-card">
+
+                <span class="farmer-peek" aria-hidden="true">
+                    <img
+    src="{{ url_for('static', filename='images/pngtree-cartoon-illustration-of-indian-farmers-png-image_6833429.png') }}"
+    alt="Indian farmer">
+                </span>
+
+                <span class="farmer-message">
+                    Click here! Let's find the right fertilizer 🌱
+                </span>
+
+                <div class="card-icon">🌱</div>
+
+                <h2>
+                    Fertilizer<br>
+                    Recommendation
+                </h2>
+
+                <p>
+                    Get the best fertilizer prediction
+                    for healthier crops and better yield.
+                </p>
+
+                <div class="card-button">
+                    Get Started <span>→</span>
+                </div>
+
+            </a>
+
+
+            <!-- SOIL HEALTH ANALYSIS -->
+
+            <a href="{{ url_for('soil_health_page') }}"
+               class="service-card soil-card">
+
+                <span class="farmer-peek" aria-hidden="true">
+                    <img
+                        src="{{ url_for('static', filename='images/pngtree-cartoon-illustration-of-indian-farmers-png-image_6833429.png') }}"
+                        alt="Indian farmers">
+                </span>
+
+                <span class="farmer-message">
+                    Click here! Let's check your soil health 🌿
+                </span>
+
+                <div class="card-icon">🧪</div>
+
+                <h2>
+                    Soil Health<br>
+                    Analysis
+                </h2>
+
+                <p>
+                    Understand your soil, measure its
+                    fertility and improve its health.
+                </p>
+
+                <div class="card-button">
+                    Analyse Now <span>→</span>
+                </div>
+
+            </a>
+
+        </section>
+
+
+        <!-- FEATURE STRIP -->
+
+        <section class="feature-strip">
+
+            <div class="feature">
+                <div class="feature-icon">🌿</div>
+                <div class="feature-text">
+                    Smart<br>Prediction
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">📈</div>
+                <div class="feature-text">
+                    Data-Driven<br>Insights
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-text">
+                    Healthier<br>Soil
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🌾</div>
+                <div class="feature-text">
+                    Better<br>Yield
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <span class="footer-line"></span>
+
+        Together for a Greener Tomorrow
+
+        <span class="footer-line"></span>
+
+    </footer>
+
+</div>
+
+</body>
+</html>

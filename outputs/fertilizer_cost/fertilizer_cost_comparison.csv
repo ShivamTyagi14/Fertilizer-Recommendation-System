@@ -1,0 +1,4 @@
+combination,phosphorus_fertilizer_cost_inr,urea_cost_inr,mop_cost_inr,total_cost_inr,cost_per_acre_inr,price_verification,phosphorus_price_status,urea_price_status,mop_price_status
+Combination A - DAP based,1068.8995964574117,434.9038615752647,922.9544795397367,2426.757937572413,2426.757937572413,All prices verified,Verified,Verified,Verified
+Combination B - SSP based,956.0713057202405,527.8516525715613,922.9544795397367,2406.8774378315384,2406.8774378315384,All prices verified,Verified,Verified,Verified
+Combination C - TSP based,,527.8516525715613,922.9544795397367,,,Incomplete - check fertilizer prices,Price missing or invalid,Verified,Verified

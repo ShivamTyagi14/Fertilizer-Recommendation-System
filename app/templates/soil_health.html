@@ -1,0 +1,1556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartFert | Soil Health Analysis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #174d32;
+            --dark-green: #0b2d20;
+            --light-green: #e9f3df;
+            --lime: #b8e986;
+            --cream: #f8f8f0;
+            --text: #24382c;
+            --muted: #829087;
+            --border: #e4e9df;
+        }
+
+        /* =====================================
+           BACKGROUND IMAGE - UPDATED
+        ===================================== */
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            isolation: isolate;
+            background: #e8eee5;
+        }
+
+      body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.22),
+            rgba(0, 0, 0, 0.32)
+        ),
+        url("{{ url_for('static', filename='images/pexels-jomon-kollannoor-337112572-30778657.jpg') }}");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+        button, input {
+            font: inherit;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            width: min(94%, 1400px);
+            margin: auto;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: var(--green);
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(23, 77, 50, 0.18);
+        }
+
+        .brand-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--dark-green);
+            letter-spacing: -1px;
+        }
+
+        .brand-name span {
+            color: #6b9d3d;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 11px 18px;
+            border: 1px solid #dce7d6;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.85);
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* INTRO */
+
+        .intro {
+            text-align: center;
+            padding: 28px 15px 25px;
+        }
+
+        .intro-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: #e5efd9;
+            color: #47743a;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .intro h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(30px, 4vw, 45px);
+            line-height: 1.15;
+            color: var(--dark-green);
+            letter-spacing: -1.5px;
+        }
+
+        .intro h1 span {
+            color: #679b42;
+        }
+
+        .intro p {
+            max-width: 620px;
+            margin: 12px auto 0;
+            color: #526b57;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* MAIN LAYOUT */
+
+        .main-layout {
+            width: min(94%, 1180px);
+            margin: 10px auto 55px;
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 23px;
+            align-items: start;
+        }
+
+        /* LEFT INFORMATION PANEL */
+
+        .side-panel {
+            position: sticky;
+            top: 20px;
+            padding: 25px 22px;
+            border-radius: 23px;
+            color: white;
+            background: linear-gradient(155deg, #174d32, #092d20);
+            box-shadow: 0 15px 35px rgba(16, 64, 39, 0.15);
+            overflow: hidden;
+        }
+
+        .side-panel::before {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(186, 232, 137, 0.08);
+            top: -100px;
+            right: -100px;
+        }
+
+        .side-panel-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .side-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: rgba(195, 238, 154, 0.15);
+            border: 1px solid rgba(195, 238, 154, 0.25);
+            font-size: 29px;
+            margin-bottom: 20px;
+        }
+
+        .side-panel h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .side-panel-content > p {
+            font-size: 12px;
+            color: #d0e3d2;
+            line-height: 1.7;
+        }
+
+        .side-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.16);
+            margin: 24px 0;
+        }
+
+        .side-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--lime);
+            color: #163b24;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .side-step h3 {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .side-step p {
+            font-size: 10px;
+            line-height: 1.5;
+            color: #c0d5c2;
+        }
+
+        .area-note {
+            margin-top: 27px;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.13);
+        }
+
+        .area-note small {
+            display: block;
+            font-size: 10px;
+            color: #c4d9c6;
+            margin-bottom: 6px;
+        }
+
+        .area-note strong {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            color: var(--lime);
+        }
+
+        .area-note span {
+            display: block;
+            font-size: 10px;
+            color: #c4d9c6;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        /* FORM CONTAINER */
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid #e9eee5;
+            border-radius: 23px;
+            padding: 27px;
+            box-shadow: 0 12px 40px rgba(28, 61, 34, 0.10);
+        }
+
+        .form-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-top h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            color: var(--dark-green);
+        }
+
+        .required-note {
+            font-size: 10px;
+            color: #89958a;
+        }
+
+        .required-note span,
+        .required {
+            color: #d66a53;
+            font-weight: 800;
+        }
+
+        /* PROGRESS */
+
+        .progress-section {
+            padding: 15px 17px;
+            background: #f5f8f1;
+            border-radius: 13px;
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 9px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .progress-info span:first-child {
+            color: #536b55;
+        }
+
+        .progress-info span:last-child {
+            color: #6a9b42;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #e1e9db;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #74aa45, #b8e986);
+            transition: width 0.3s ease;
+        }
+
+        /* FORM SECTIONS */
+
+        .form-section {
+            margin-bottom: 27px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding-bottom: 13px;
+            margin-bottom: 17px;
+            border-bottom: 1px solid #edf0e9;
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #edf5e7;
+            font-size: 18px;
+        }
+
+        .section-heading h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: #244b31;
+        }
+
+        .section-heading p {
+            font-size: 10px;
+            color: #929d92;
+            margin-top: 3px;
+        }
+
+        /* INPUTS */
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .input-group {
+            min-width: 0;
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #43594a;
+            margin-bottom: 8px;
+        }
+
+        .unit {
+            font-size: 9px;
+            color: #9ba69b;
+            font-weight: 500;
+            margin-left: 3px;
+        }
+
+        .input-control input {
+            width: 100%;
+            height: 47px;
+            border: 1px solid #e3e9df;
+            border-radius: 11px;
+            background: #fbfcf9;
+            color: #314536;
+            padding: 0 13px;
+            outline: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .input-control input::placeholder {
+            color: #b2bbb1;
+            font-weight: 400;
+        }
+
+        .input-control input:focus {
+            border-color: #79a94f;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(130, 179, 82, 0.13);
+        }
+
+        .input-control input:hover {
+            border-color: #b6c9a9;
+        }
+
+        .input-hint {
+            font-size: 9px;
+            color: #9aa49a;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* NUTRIENT CARDS */
+
+        .nutrient-card {
+            padding: 15px;
+            background: #f8faf5;
+            border: 1px solid #edf1e9;
+            border-radius: 15px;
+        }
+
+        .nutrient-card .input-control input {
+            background: white;
+        }
+
+        .nutrient-card.organic {
+            border-top: 3px solid #78a84c;
+        }
+
+        .nutrient-card.nitrogen {
+            border-top: 3px solid #78a84c;
+        }
+
+        .nutrient-card.phosphorus {
+            border-top: 3px solid #d8a34e;
+        }
+
+        .nutrient-card.potassium {
+            border-top: 3px solid #7396c1;
+        }
+
+        .nutrient-symbol {
+            display: inline-grid;
+            place-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 8px;
+            background: #e9f2e2;
+            color: #527d38;
+            font-size: 11px;
+            font-weight: 800;
+            margin-right: 5px;
+        }
+
+        /* ERROR */
+
+        .error-message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: #fff0ed;
+            border: 1px solid #f5c8bf;
+            color: #a84332;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* SUBMIT */
+
+        .submit-area {
+            margin-top: 25px;
+        }
+
+        .submit-button {
+            width: 100%;
+            min-height: 53px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            border-radius: 13px;
+            background: linear-gradient(110deg, #174d32, #286d3e);
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(23, 77, 50, 0.19);
+            transition: 0.3s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(23, 77, 50, 0.25);
+            background: linear-gradient(110deg, #103d27, #397d45);
+        }
+
+        .submit-button:active {
+            transform: scale(0.99);
+        }
+
+        .submit-button span {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .submit-button:hover span {
+            transform: translateX(5px);
+        }
+
+        .privacy-note {
+            text-align: center;
+            margin-top: 13px;
+            color: #9aa49a;
+            font-size: 10px;
+        }
+
+        /* RESULTS */
+
+        .result-section {
+            margin-top: 38px;
+            scroll-margin-top: 25px;
+        }
+
+        .result-heading {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .result-heading h2 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark-green);
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .result-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .score-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 28px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1e5134, #36744b);
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .score-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 46px;
+            font-weight: 800;
+            margin: 9px 0;
+        }
+
+        .score-number span {
+            font-size: 17px;
+            opacity: 0.8;
+        }
+
+        .score-description {
+            font-size: 12px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .category-badge {
+            padding: 11px 17px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.17);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .result-subtitle {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark-green);
+            font-size: 19px;
+            margin: 28px 0 16px;
+        }
+
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .parameter-card {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            transition: 0.25s;
+        }
+
+        .parameter-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(28, 61, 34, 0.07);
+        }
+
+        .parameter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .parameter-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #34483a;
+        }
+
+        .status-badge {
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #edf3ed;
+            color: #42684a;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .parameter-value {
+            font-size: 23px;
+            font-weight: bold;
+            color: var(--dark-green);
+            margin-bottom: 12px;
+        }
+
+        .parameter-value span {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .result-progress-track {
+            height: 7px;
+            border-radius: 20px;
+            background: #edf1eb;
+            overflow: hidden;
+        }
+
+        .result-progress-fill {
+            width: 0;
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #74aa45, #b8e986);
+            transition: width 1s ease;
+        }
+
+        .parameter-score {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .suggestion-box {
+            background: #f3f7ef;
+            border: 1px solid #e1ebdc;
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 25px;
+        }
+
+        .suggestion-box h3 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark-green);
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 11px;
+            color: #586c5b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .suggestion-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .suggestion-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3f8150;
+            font-weight: bold;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            padding: 0 15px 25px;
+            font-size: 11px;
+            color: #435e48;
+        }
+
+        .footer strong {
+            color: #28633b;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                max-width: 680px;
+            }
+
+            .side-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .side-steps {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .navbar {
+                padding: 14px 0;
+            }
+
+            .brand-name {
+                font-size: 21px;
+            }
+
+            .brand-icon {
+                width: 37px;
+                height: 37px;
+                font-size: 21px;
+            }
+
+            .back-link {
+                padding: 9px 12px;
+                font-size: 11px;
+            }
+
+            .intro {
+                padding-top: 25px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .intro p {
+                font-size: 12px;
+            }
+
+            .main-layout {
+                width: 94%;
+                margin-top: 5px;
+            }
+
+            .side-panel {
+                padding: 20px;
+            }
+
+            .side-steps {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .form-container {
+                padding: 19px 15px;
+            }
+
+            .form-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .input-grid,
+            .parameter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .score-number {
+                font-size: 39px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+            <div class="brand-icon">🌿</div>
+            <div class="brand-name">Smart<span>Fert</span></div>
+        </a>
+
+        <a href="/" class="back-link">← Back to Home</a>
+
+    </nav>
+
+
+    <!-- INTRODUCTION -->
+
+    <section class="intro">
+
+        <div class="intro-label">🌱 SMART SOIL ANALYSIS</div>
+
+        <h1>
+            Understand Your <span>Soil Health</span>
+        </h1>
+
+        <p>
+            Enter your soil test values to evaluate soil quality,
+            identify nutrient deficiencies and receive useful
+            soil improvement suggestions.
+        </p>
+
+    </section>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-layout">
+
+        <!-- LEFT INFORMATION PANEL -->
+
+        <aside class="side-panel">
+
+            <div class="side-panel-content">
+
+                <div class="side-icon">🌾</div>
+
+                <h2>
+                    Healthy Soil.<br>
+                    Better Harvests.
+                </h2>
+
+                <p>
+                    Understand the condition of your soil through
+                    six important parameters. Get a soil health score
+                    and identify areas that may need improvement.
+                </p>
+
+                <div class="side-divider"></div>
+
+                <div class="side-steps">
+
+                    <div class="side-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>Enter Soil pH & EC</h3>
+                            <p>Provide acidity and electrical conductivity values.</p>
+                        </div>
+                    </div>
+
+                    <div class="side-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>Check Organic Carbon</h3>
+                            <p>Enter the organic carbon percentage from your report.</p>
+                        </div>
+                    </div>
+
+                    <div class="side-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>Provide NPK Values</h3>
+                            <p>Enter nitrogen, phosphorus and potassium levels.</p>
+                        </div>
+                    </div>
+
+                    <div class="side-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h3>View Soil Health Report</h3>
+                            <p>Check your score, parameter status and suggestions.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="area-note">
+                    <small>SOIL HEALTH ASSESSMENT</small>
+                    <strong>6 Parameters</strong>
+                    <span>pH, EC, Organic Carbon, Nitrogen, Phosphorus and Potassium.</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- SOIL INPUT FORM -->
+
+        <section class="form-container">
+
+            <div class="form-top">
+
+                <h2>Soil Test Information</h2>
+
+                <div class="required-note">
+                    <span>*</span> Required fields
+                </div>
+
+            </div>
+
+
+            <!-- FORM COMPLETION STATUS -->
+
+            <div class="progress-section">
+
+                <div class="progress-info">
+                    <span>Form completion</span>
+                    <span id="progressText">0% completed</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+            </div>
+
+
+            {% if error %}
+
+            <div class="error-message">
+                <span>⚠️</span>
+                <div>{{ error }}</div>
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST" action="/soil-health" id="soilHealthForm">
+
+
+                <!-- SECTION 1: SOIL CONDITIONS -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">🌍</div>
+
+                        <div>
+                            <h3>Soil Chemical Properties</h3>
+                            <p>Enter pH and electrical conductivity values.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+                        <div class="input-group">
+
+                            <label for="soil_ph">
+                                Soil pH <span class="required">*</span>
+                                <span class="unit">pH scale</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_ph"
+                                    name="soil_ph"
+                                    placeholder="e.g. 6.78"
+                                    step="any"
+                                    min="0"
+                                    max="14"
+                                    value="{{ request.form.get('soil_ph', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Indicates whether soil is acidic or alkaline.
+                            </p>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="soil_ec">
+                                Electrical Conductivity <span class="required">*</span>
+                                <span class="unit">dS/m</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_ec"
+                                    name="soil_ec"
+                                    placeholder="e.g. 0.25"
+                                    step="any"
+                                    min="0"
+                                    value="{{ request.form.get('soil_ec', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Indicates the soluble salt concentration in soil.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECTION 2: ORGANIC CARBON -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">🍂</div>
+
+                        <div>
+                            <h3>Organic Carbon</h3>
+                            <p>Enter the organic carbon level of your soil.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+                        <div class="input-group nutrient-card organic">
+
+                            <label for="soil_oc">
+                                <span class="nutrient-symbol">OC</span>
+                                Organic Carbon <span class="required">*</span>
+                                <span class="unit">%</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_oc"
+                                    name="soil_oc"
+                                    placeholder="e.g. 0.38"
+                                    step="any"
+                                    min="0"
+                                    value="{{ request.form.get('soil_oc', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Helps assess organic matter and soil fertility.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECTION 3: NUTRIENT LEVELS -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">🧪</div>
+
+                        <div>
+                            <h3>Soil Nutrient Levels</h3>
+                            <p>Enter available NPK values from your soil report.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+                        <div class="input-group nutrient-card nitrogen">
+
+                            <label for="soil_nitrogen">
+                                <span class="nutrient-symbol">N</span>
+                                Nitrogen <span class="required">*</span>
+                                <span class="unit">kg/ha</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_nitrogen"
+                                    name="soil_nitrogen"
+                                    placeholder="e.g. 179"
+                                    step="any"
+                                    min="0"
+                                    value="{{ request.form.get('soil_nitrogen', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Supports leaf development and plant growth.
+                            </p>
+
+                        </div>
+
+
+                        <div class="input-group nutrient-card phosphorus">
+
+                            <label for="soil_phosphorus">
+                                <span class="nutrient-symbol">P</span>
+                                Phosphorus <span class="required">*</span>
+                                <span class="unit">kg/ha</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_phosphorus"
+                                    name="soil_phosphorus"
+                                    placeholder="e.g. 7.93"
+                                    step="any"
+                                    min="0"
+                                    value="{{ request.form.get('soil_phosphorus', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Supports root development and energy transfer.
+                            </p>
+
+                        </div>
+
+
+                        <div class="input-group nutrient-card potassium">
+
+                            <label for="soil_potassium">
+                                <span class="nutrient-symbol">K</span>
+                                Potassium <span class="required">*</span>
+                                <span class="unit">kg/ha</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="soil_potassium"
+                                    name="soil_potassium"
+                                    placeholder="e.g. 256"
+                                    step="any"
+                                    min="0"
+                                    value="{{ request.form.get('soil_potassium', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Helps improve plant strength and stress resistance.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFORMATION NOTE -->
+
+                <div class="area-note" style="background:#f3f7ef; border:1px solid #e1ebdc; color:#526b55; margin-top:10px;">
+
+                    <strong style="color:#28633b; font-size:14px;">🌱 Before You Analyse</strong>
+
+                    <span style="color:#687d6b; font-size:11px;">
+                        Enter all six values using the units displayed.
+                        For accurate results, use values from your laboratory soil test report.
+                    </span>
+
+                </div>
+
+
+                <!-- SUBMIT BUTTON -->
+
+                <div class="submit-area">
+
+                    <button type="submit" class="submit-button">
+                        Analyse My Soil Health
+                        <span>→</span>
+                    </button>
+
+                    <p class="privacy-note">
+                        🌿 Your inputs will be evaluated by the SmartFert soil health analysis system.
+                    </p>
+
+                </div>
+
+            </form>
+
+
+            <!-- ANALYSIS RESULTS -->
+
+            {% if soil_health %}
+
+            <section class="result-section" id="analysis-result">
+
+                <div class="result-heading">
+
+                    <div class="intro-label">🌱 ANALYSIS COMPLETE</div>
+
+                    <h2>Your Soil Health Report</h2>
+
+                    <p>Assessment based on the six soil parameters you entered.</p>
+
+                </div>
+
+
+                <!-- OVERALL SCORE -->
+
+                <div class="score-card">
+
+                    <div>
+
+                        <div class="score-label">Overall Soil Health Score</div>
+
+                        <div class="score-number">
+                            {{ "%.2f"|format(soil_health['soil_health_score']|float) }}
+                            <span>/ 100</span>
+                        </div>
+
+                        <p class="score-description">
+                            Combined assessment of six important soil parameters.
+                        </p>
+
+                    </div>
+
+                    <div class="category-badge">
+                        {{ soil_health['soil_health_category'] }}
+                    </div>
+
+                </div>
+
+
+                <!-- PARAMETER ANALYSIS -->
+
+                <h3 class="result-subtitle">Parameter-wise Analysis</h3>
+
+                {% set parameters = [
+                    ('pH', 'pH_Status', 'pH_Score', 'pH scale'),
+                    ('EC', 'EC_Status', 'EC_Score', 'dS/m'),
+                    ('OC', 'OC_Status', 'OC_Score', '%'),
+                    ('Nitrogen', 'Nitrogen_Status', 'Nitrogen_Score', 'kg/ha'),
+                    ('Phosphorus', 'Phosphorus_Status', 'Phosphorus_Score', 'kg/ha'),
+                    ('Potassium', 'Potassium_Status', 'Potassium_Score', 'kg/ha')
+                ] %}
+
+
+                <div class="parameter-grid">
+
+                    {% for parameter in parameters %}
+
+                        {% set value = soil_health['values'][parameter[0]] %}
+                        {% set status = soil_health['statuses'][parameter[1]] %}
+                        {% set score = soil_health['scores'][parameter[2]] %}
+
+                        <div class="parameter-card">
+
+                            <div class="parameter-top">
+
+                                <div class="parameter-name">
+                                    {{ parameter[0] }}
+                                </div>
+
+                                <div class="status-badge">
+                                    {{ status }}
+                                </div>
+
+                            </div>
+
+                            <div class="parameter-value">
+                                {{ value }}
+                                <span>{{ parameter[3] }}</span>
+                            </div>
+
+                            <div class="result-progress-track">
+                                <div
+                                    class="result-progress-fill"
+                                    data-width="{{ score }}"
+                                ></div>
+                            </div>
+
+                            <div class="parameter-score">
+                                Parameter score: {{ score }}/100
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- IMPROVEMENT SUGGESTIONS -->
+
+                <div class="suggestion-box">
+
+                    <h3>🌿 Soil Improvement Suggestions</h3>
+
+                    {% if soil_health['suggestions'] %}
+
+                        <ul class="suggestion-list">
+
+                            {% for suggestion in soil_health['suggestions'] %}
+                                <li>{{ suggestion }}</li>
+                            {% endfor %}
+
+                        </ul>
+
+                    {% else %}
+
+                        <p>No specific improvement suggestions are available.</p>
+
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+        Powered by <strong>SmartFert Soil Health Analysis System</strong>
+        · Smarter Farming for a Greener Future
+    </footer>
+
+</div>
+
+
+<!-- INTERACTIVE FORM COMPLETION -->
+
+<script>
+
+    const form = document.getElementById("soilHealthForm");
+
+    const progressFill = document.getElementById("progressFill");
+
+    const progressText = document.getElementById("progressText");
+
+    const requiredFields = form.querySelectorAll(
+        "input[required]"
+    );
+
+
+    function updateProgress() {
+
+        let completed = 0;
+
+        requiredFields.forEach(function(field) {
+
+            if (
+                field.value.trim() !== "" &&
+                field.checkValidity()
+            ) {
+                completed++;
+            }
+
+        });
+
+        const percentage = Math.round(
+            (completed / requiredFields.length) * 100
+        );
+
+        progressFill.style.width = percentage + "%";
+
+        progressText.textContent = percentage + "% completed";
+
+    }
+
+
+    requiredFields.forEach(function(field) {
+
+        field.addEventListener("input", updateProgress);
+
+        field.addEventListener("change", updateProgress);
+
+    });
+
+
+    updateProgress();
+
+
+    // ANIMATED RESULT PROGRESS BARS
+
+    document.querySelectorAll(".result-progress-fill").forEach(function(bar) {
+
+        const score = Number(bar.getAttribute("data-width")) || 0;
+
+        const safeScore = Math.min(100, Math.max(0, score));
+
+        requestAnimationFrame(function() {
+            bar.style.width = safeScore + "%";
+        });
+
+    });
+
+
+    // AUTOMATICALLY SCROLL TO RESULTS
+
+    window.addEventListener("load", function() {
+
+        const result = document.getElementById("analysis-result");
+
+        if (result) {
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

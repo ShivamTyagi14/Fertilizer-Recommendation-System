@@ -1,0 +1,1232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Soil Health Report | SmartFert</title>
+
+    <!-- MODERN FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --forest: #173f2b;
+            --deep-green: #123d29;
+            --leaf: #245b37;
+            --lime: #b6dc79;
+            --cream: #f3f7ef;
+            --text: #203b2c;
+            --muted: #778679;
+            --border: #e4ebdf;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            background: var(--forest);
+            color: white;
+            padding: 17px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 18px rgba(15, 50, 30, 0.12);
+        }
+
+        .brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            color: var(--lime);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 23px;
+        }
+
+        .nav-links a {
+            color: #e4eee5;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--lime);
+        }
+
+        .nav-back {
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 9px;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            width: 90%;
+            max-width: 1120px;
+            margin: 38px auto;
+        }
+
+        /* PAGE HEADING */
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .heading-tag {
+            display: inline-block;
+            color: #54813c;
+            background: #e7f1dc;
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--forest);
+            margin-bottom: 9px;
+        }
+
+        .heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* OVERALL SOIL HEALTH CARD */
+
+        .score-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(125deg, #123d29, #245d3d);
+            color: white;
+            border-radius: 25px;
+            padding: 40px 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 23px;
+            box-shadow: 0 15px 35px rgba(23, 63, 43, 0.15);
+            animation: fadeUp 0.7s ease;
+        }
+
+        .score-card::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: 90px;
+            top: -200px;
+        }
+
+        .score-card::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            background: rgba(183, 220, 121, 0.07);
+            border-radius: 50%;
+            right: -80px;
+            bottom: -130px;
+        }
+
+        .score-info {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .score-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #c4e68c;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .score-info h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .score-info p {
+            color: #d4e5d8;
+            line-height: 1.8;
+            max-width: 610px;
+            font-size: 14px;
+        }
+
+        /* CATEGORY BADGES */
+
+        .category {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 20px;
+            padding: 10px 19px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            border: 1px solid transparent;
+        }
+
+        .category::before {
+            content: "";
+            width: 9px;
+            height: 9px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+
+        .category-poor {
+            background: #ffe1df;
+            color: #b42318;
+            border-color: #ffb9b3;
+        }
+
+        .category-moderate {
+            background: #fff0c2;
+            color: #946000;
+            border-color: #f6d77b;
+        }
+
+        .category-good {
+            background: #d9f5df;
+            color: #19723b;
+            border-color: #a8dfb4;
+        }
+
+        .category-excellent {
+            background: #d8f1ed;
+            color: #087568;
+            border-color: #9edbd1;
+        }
+
+        /* CIRCULAR SCORE */
+
+        .score-visual {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            min-width: 190px;
+        }
+
+        .score-circle {
+            width: 178px;
+            height: 178px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: conic-gradient(
+                #b7dc79 0deg,
+                #b7dc79 0deg,
+                rgba(255,255,255,0.15) 0deg
+            );
+            position: relative;
+            box-shadow: 0 0 30px rgba(183, 220, 121, 0.13);
+            transition: background 1.2s ease;
+        }
+
+        .score-circle::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #1d5035;
+        }
+
+        .score-circle-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .score-label {
+            font-size: 10px;
+            color: #d5e7d8;
+            margin-top: 7px;
+            letter-spacing: 1.4px;
+        }
+
+        .score-caption {
+            font-size: 12px;
+            color: #d4e5d8;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEALTH CLASSIFICATION */
+
+        .health-scale {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 23px 25px;
+            margin-bottom: 32px;
+            box-shadow: 0 5px 18px rgba(30, 65, 40, 0.04);
+        }
+
+        .health-scale-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 19px;
+        }
+
+        .health-scale-heading h3 {
+            font-family: 'Outfit', sans-serif;
+            color: #244b32;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .health-scale-heading span {
+            color: #879487;
+            font-size: 12px;
+        }
+
+        .health-levels {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .health-level {
+            padding: 16px 9px;
+            border-radius: 13px;
+            text-align: center;
+            border: 2px solid transparent;
+            opacity: 0.55;
+            transition: all 0.3s ease;
+        }
+
+        .health-level strong {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .health-level small {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .health-level.active {
+            opacity: 1;
+            transform: translateY(-4px);
+            box-shadow: 0 7px 17px rgba(0,0,0,0.08);
+        }
+
+        .level-poor {
+            color: #b42318;
+            background: #fff0ef;
+        }
+
+        .level-poor.active {
+            border-color: #e36a61;
+        }
+
+        .level-moderate {
+            color: #946000;
+            background: #fff7df;
+        }
+
+        .level-moderate.active {
+            border-color: #e6b83e;
+        }
+
+        .level-good {
+            color: #19723b;
+            background: #eaf8ed;
+        }
+
+        .level-good.active {
+            border-color: #62b879;
+        }
+
+        .level-excellent {
+            color: #087568;
+            background: #e4f6f2;
+        }
+
+        .level-excellent.active {
+            border-color: #50b9a9;
+        }
+
+        /* SECTION HEADINGS */
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 15px;
+            margin: 32px 0 18px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            color: var(--forest);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* PARAMETER CARDS */
+
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 17px;
+        }
+
+        .parameter-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 23px;
+            box-shadow: 0 5px 18px rgba(30, 65, 40, 0.04);
+            transition: 0.3s ease;
+        }
+
+        .parameter-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(30, 65, 40, 0.09);
+            border-color: #cbdcbd;
+        }
+
+        .parameter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .parameter-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #244b32;
+        }
+
+        .parameter-value {
+            font-size: 17px;
+            font-weight: 800;
+            color: #17452e;
+            text-align: right;
+        }
+
+        .parameter-value small {
+            font-size: 11px;
+            color: #849184;
+            font-weight: 500;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #edf4e8;
+            color: #426b35;
+            margin-bottom: 14px;
+        }
+
+        .parameter-progress-track {
+            width: 100%;
+            height: 9px;
+            background: #e9eee6;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .parameter-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6c9f43, #b6dc79);
+            border-radius: 20px;
+            transition: width 1s ease;
+        }
+
+        .score-text {
+            margin-top: 9px;
+            color: #7a897b;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* PREMIUM SOIL IMPROVEMENT SECTION */
+
+        .suggestions-card {
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 21px;
+            margin-top: 35px;
+            box-shadow: 0 10px 30px rgba(30, 65, 40, 0.06);
+        }
+
+        .suggestions-header {
+            position: relative;
+            background: linear-gradient(120deg, #173f2b, #285c3d);
+            padding: 27px 30px;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .suggestions-header::after {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -45px;
+            top: -90px;
+        }
+
+        .suggestions-icon {
+            width: 55px;
+            height: 55px;
+            min-width: 55px;
+            border-radius: 16px;
+            background: rgba(190, 224, 139, 0.16);
+            border: 1px solid rgba(190, 224, 139, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .suggestions-heading {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .suggestions-heading h2 {
+            font-family: 'Outfit', sans-serif;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .suggestions-heading p {
+            color: #d0e1d2;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .suggestion-count {
+            position: relative;
+            z-index: 1;
+            background: #c1e58b;
+            color: #20452d;
+            padding: 9px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .suggestions-body {
+            padding: 27px 30px 30px;
+            background: linear-gradient(180deg, #ffffff, #fbfdf9);
+        }
+
+        .suggestions-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            counter-reset: suggestion;
+        }
+
+        .suggestions-list li {
+            counter-increment: suggestion;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 18px;
+            border: 1px solid #e7eee2;
+            border-radius: 14px;
+            background: #f8fbf5;
+            color: #506453;
+            font-size: 13px;
+            line-height: 1.75;
+            transition: all 0.25s ease;
+        }
+
+        .suggestions-list li::before {
+            content: counter(suggestion, decimal-leading-zero);
+            width: 35px;
+            height: 35px;
+            min-width: 35px;
+            border-radius: 11px;
+            background: #e5f1d8;
+            color: #38623c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .suggestions-list li:hover {
+            background: #f0f7e9;
+            border-color: #c9ddb7;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(30, 65, 40, 0.06);
+        }
+
+        .suggestion-note {
+            margin-top: 22px;
+            padding: 15px 18px;
+            background: #f0f6e9;
+            border-left: 4px solid #83ad54;
+            border-radius: 9px;
+            color: #536d4e;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .suggestion-note strong {
+            color: #315a35;
+        }
+
+        .no-suggestions {
+            padding: 21px;
+            background: #f5f9f1;
+            border-radius: 13px;
+            color: #536b58;
+            line-height: 1.8;
+            font-size: 13px;
+        }
+
+        /* ACTION BUTTONS */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 13px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--leaf);
+            color: white;
+            box-shadow: 0 5px 13px rgba(36, 91, 55, 0.15);
+        }
+
+        .btn-primary:hover {
+            background: var(--forest);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(36, 91, 55, 0.2);
+        }
+
+        .btn-secondary {
+            background: #e3edd9;
+            color: #245b37;
+        }
+
+        .btn-secondary:hover {
+            background: #d3e4c5;
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #819080;
+            font-size: 12px;
+            border-top: 1px solid #e5ecdf;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .score-card {
+                padding: 32px;
+            }
+
+            .score-info h2 {
+                font-size: 27px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 16px 5%;
+            }
+
+            .brand {
+                font-size: 22px;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 25px;
+            }
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+            .score-card {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 29px 20px;
+            }
+
+            .score-info h2 {
+                font-size: 25px;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-circle::before {
+                width: 126px;
+                height: 126px;
+            }
+
+            .score-number {
+                font-size: 37px;
+            }
+
+            .health-levels {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .health-scale-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .parameter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .suggestions-header {
+                padding: 21px;
+                flex-wrap: wrap;
+            }
+
+            .suggestions-heading h2 {
+                font-size: 19px;
+            }
+
+            .suggestions-body {
+                padding: 19px;
+            }
+
+            .suggestions-list {
+                grid-template-columns: 1fr;
+            }
+
+            .suggestion-count {
+                margin-left: 72px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .nav-links a:first-child {
+                display: none;
+            }
+
+            .parameter-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .parameter-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <div class="brand">Smart<span>Fert</span></div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/soil-health" class="nav-back">New Soil Analysis ↗</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- PAGE HEADING -->
+
+        <header class="heading">
+            <div class="heading-tag">✦ Smart Soil Intelligence</div>
+
+            <h1>Your Soil Health Report</h1>
+
+            <p>
+                Understand your soil condition, explore nutrient levels
+                and discover ways to improve your soil quality.
+            </p>
+        </header>
+
+        <!-- OVERALL SOIL HEALTH -->
+
+        <section
+            class="score-card"
+            id="overallScoreCard"
+            data-score="{{ soil_health['soil_health_score'] }}"
+            data-category="{{ soil_health['soil_health_category'] }}"
+        >
+
+            <div class="score-info">
+
+                <div class="score-eyebrow">
+                    ✦ YOUR SOIL REPORT
+                </div>
+
+                <h2>Overall Soil Health</h2>
+
+                <p>
+                    Your soil health score is based on six essential
+                    parameters: pH, Electrical Conductivity, Organic
+                    Carbon, Nitrogen, Phosphorus and Potassium.
+                    Review your results to understand the condition
+                    of your soil.
+                </p>
+
+                <div class="category" id="healthCategory">
+                    {{ soil_health['soil_health_category'] }}
+                </div>
+
+            </div>
+
+            <div class="score-visual">
+
+                <div class="score-circle" id="scoreCircle">
+
+                    <div class="score-circle-inner">
+
+                        <div class="score-number">
+                            {{ "%.1f"|format(soil_health['soil_health_score']|float) }}
+                        </div>
+
+                        <div class="score-label">OUT OF 100</div>
+
+                    </div>
+
+                </div>
+
+                <div class="score-caption">
+                    Overall Soil Health Score
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- HEALTH CLASSIFICATION -->
+
+        <section class="health-scale">
+
+            <div class="health-scale-heading">
+                <h3>Soil Health Classification</h3>
+                <span>Your current category is highlighted</span>
+            </div>
+
+            <div class="health-levels">
+
+                <div class="health-level level-poor" data-level="poor">
+                    <strong>● Poor</strong>
+                    <small>0 – Below 40</small>
+                </div>
+
+                <div class="health-level level-moderate" data-level="moderate">
+                    <strong>● Moderate</strong>
+                    <small>40 – Below 60</small>
+                </div>
+
+                <div class="health-level level-good" data-level="good">
+                    <strong>● Good</strong>
+                    <small>60 – Below 80</small>
+                </div>
+
+                <div class="health-level level-excellent" data-level="excellent">
+                    <strong>● Excellent</strong>
+                    <small>80 – 100</small>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PARAMETER ANALYSIS HEADING -->
+
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">Soil Parameter Analysis</h2>
+                <p class="section-subtitle">
+                    Detailed analysis of your six soil health indicators.
+                </p>
+            </div>
+        </div>
+
+        <!-- PARAMETER CARDS -->
+
+        {% set parameters = [
+            ('pH', 'pH_Status', 'pH_Score', 'pH scale'),
+            ('EC', 'EC_Status', 'EC_Score', 'dS/m'),
+            ('OC', 'OC_Status', 'OC_Score', '%'),
+            ('Nitrogen', 'Nitrogen_Status', 'Nitrogen_Score', 'kg/ha'),
+            ('Phosphorus', 'Phosphorus_Status', 'Phosphorus_Score', 'kg/ha'),
+            ('Potassium', 'Potassium_Status', 'Potassium_Score', 'kg/ha')
+        ] %}
+
+        <div class="parameter-grid">
+
+            {% for parameter in parameters %}
+
+                {% set value = soil_health['values'][parameter[0]] %}
+                {% set status = soil_health['statuses'][parameter[1]] %}
+                {% set score = soil_health['scores'][parameter[2]] %}
+
+                <article class="parameter-card">
+
+                    <div class="parameter-top">
+
+                        <div class="parameter-name">
+                            {{ parameter[0] }}
+                        </div>
+
+                        <div class="parameter-value">
+                            {{ value }}
+                            <small>{{ parameter[3] }}</small>
+                        </div>
+
+                    </div>
+
+                    <div class="status">
+                        {{ status }}
+                    </div>
+
+                    <div class="parameter-progress-track">
+
+                        <div
+                            class="parameter-progress-fill score-fill"
+                            data-width="{{ score }}"
+                        ></div>
+
+                    </div>
+
+                    <div class="score-text">
+                        Parameter score: {{ score }}/100
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- PREMIUM SOIL IMPROVEMENT GUIDE -->
+
+        <section class="suggestions-card">
+
+            <div class="suggestions-header">
+
+                <div class="suggestions-icon">
+                    🌱
+                </div>
+
+                <div class="suggestions-heading">
+
+                    <h2>Soil Improvement Guide</h2>
+
+                    <p>
+                        Smart recommendations to improve your soil
+                        condition and maintain a better nutrient balance.
+                    </p>
+
+                </div>
+
+                {% if soil_health['suggestions'] %}
+                    <div class="suggestion-count">
+                        {{ soil_health['suggestions']|length }} Tips
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="suggestions-body">
+
+                {% if soil_health['suggestions'] %}
+
+                    <ul class="suggestions-list">
+
+                        {% for suggestion in soil_health['suggestions'] %}
+                            <li>{{ suggestion }}</li>
+                        {% endfor %}
+
+                    </ul>
+
+                    <div class="suggestion-note">
+                        <strong>SmartFert Tip:</strong>
+                        Follow soil-test-based recommendations and
+                        monitor your soil regularly to maintain its
+                        health and productivity.
+                    </div>
+
+                {% else %}
+
+                    <p class="no-suggestions">
+                        Your soil analysis has no specific improvement
+                        suggestions at this time. Continue regular soil
+                        testing and maintain balanced nutrient management.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="actions">
+
+            <a href="/soil-health" class="btn btn-primary">
+                ↻ Analyse Soil Again
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        SmartFert | Smart Fertilizer Recommendation and Soil Health Analysis System
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const scoreCard = document.getElementById("overallScoreCard");
+            const scoreCircle = document.getElementById("scoreCircle");
+            const categoryBadge = document.getElementById("healthCategory");
+
+            if (scoreCard && scoreCircle && categoryBadge) {
+
+                const score = Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        parseFloat(scoreCard.dataset.score) || 0
+                    )
+                );
+
+                // NORMALIZE CATEGORY
+
+                let category = scoreCard.dataset.category
+                    .trim()
+                    .toLowerCase();
+
+                if (category === "medium") {
+                    category = "moderate";
+                }
+
+                const validCategories = [
+                    "poor",
+                    "moderate",
+                    "good",
+                    "excellent"
+                ];
+
+                if (!validCategories.includes(category)) {
+                    category = "poor";
+                }
+
+                // APPLY CATEGORY COLOR
+
+                categoryBadge.classList.add("category-" + category);
+
+                // HIGHLIGHT CURRENT CATEGORY
+
+                document.querySelectorAll(".health-level").forEach(
+                    function (level) {
+
+                        if (level.dataset.level === category) {
+                            level.classList.add("active");
+                        }
+
+                    }
+                );
+
+                // ANIMATE CIRCULAR SCORE
+
+                setTimeout(function () {
+
+                    const degrees = score * 3.6;
+
+                    scoreCircle.style.background =
+                        "conic-gradient(#b7dc79 0deg, #b7dc79 " +
+                        degrees + "deg, rgba(255,255,255,0.15) " +
+                        degrees + "deg, rgba(255,255,255,0.15) 360deg)";
+
+                }, 150);
+
+            }
+
+            // ANIMATE PARAMETER PROGRESS BARS
+
+            document.querySelectorAll(".score-fill").forEach(
+                function (bar) {
+
+                    let score = parseFloat(bar.dataset.width);
+
+                    if (isNaN(score)) {
+                        score = 0;
+                    }
+
+                    score = Math.max(0, Math.min(100, score));
+
+                    setTimeout(function () {
+                        bar.style.width = score + "%";
+                    }, 200);
+
+                }
+            );
+
+        });
+
+    </script>
+
+</body>
+</html>

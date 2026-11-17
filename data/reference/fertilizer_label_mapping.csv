@@ -1,0 +1,15 @@
+ml_fertilizer_label,composition_product,status,notes
+10-10-10,NPK 10:10:10,Pending,Confirm actual product label and N-P2O5-K2O grade
+10-26-26,NPK 10:26:26,Verified,Grade label indicates N-P2O5-K2O
+14-14-14,NPK 14:14:14,Pending,Confirm actual product label and N-P2O5-K2O grade
+14-35-14,NPK 14:35:14,Pending,Confirm actual product label and N-P2O5-K2O grade
+15-15-15,NPK 15:15:15,Verified,Grade label indicates N-P2O5-K2O
+17-17-17,NPK 17:17:17,Verified,Grade label indicates N-P2O5-K2O
+20-20,,Pending,Complete fertilizer grade needs verification
+28-28,,Pending,Complete fertilizer grade needs verification
+DAP,DAP,Verified,Standard DAP grade
+Potassium chloride,MOP,Verify product grade,Confirm actual product label
+Potassium sulfate.,Potassium Sulphate,Verify product grade,Confirm actual product label
+Superphosphate,,Pending,Verify whether SSP or TSP
+TSP,TSP,Verified,Standard TSP grade
+Urea,Urea,Verified,Standard urea grade

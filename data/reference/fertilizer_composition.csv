@@ -1,0 +1,15 @@
+fertilizer_name,grade,N_percent,P2O5_percent,K2O_percent,S_percent,source,status
+Urea,46-0-0,46.0,0,0,0,Fertilizer Control Order,Verified
+DAP,18-46-0,18.0,46,0,0,Fertilizer Control Order,Verified
+MOP,0-0-60,0.0,0,60,0,Government fertilizer grade,Verified
+SSP,0-16-0,0.0,16,0,11,Government fertilizer grade,Verified
+TSP,0-46-0,0.0,46,0,0,Government fertilizer grade,Verified
+Ammonium Sulphate,20.6-0-0,20.6,0,0,23,TNAU fertilizer nutrient table,Verified
+Potassium Sulphate,0-0-50,0.0,0,50,17,TNAU fertilizer nutrient table,Verified
+NPK 10:26:26,10-26-26,10.0,26,26,0,Government fertilizer grade,Verified
+NPK 12:32:16,12-32-16,12.0,32,16,0,Government fertilizer grade,Verified
+NPK 15:15:15,15-15-15,15.0,15,15,0,Government fertilizer grade,Verified
+NPK 17:17:17,17-17-17,17.0,17,17,0,Government fertilizer grade,Verified
+NPK 10:10:10,10-10-10,10.0,10,10,0,Grade-based composition; confirm product label,Pending
+NPK 14:14:14,14-14-14,14.0,14,14,0,Grade-based composition; confirm product label,Pending
+NPK 14:35:14,14-35-14,14.0,35,14,0,Grade-based composition; confirm product label,Pending

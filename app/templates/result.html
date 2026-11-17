@@ -1,0 +1,1500 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fertilizer Recommendation | SmartFert</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --forest: #173f2b;
+            --deep-green: #123d29;
+            --leaf: #245b37;
+            --lime: #b6dc79;
+            --cream: #f3f7ef;
+            --text: #203b2c;
+            --muted: #788679;
+            --border: #e4ebdf;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            background: var(--forest);
+            color: white;
+            padding: 17px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 18px rgba(15, 50, 30, 0.12);
+        }
+
+        .brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            color: var(--lime);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #e4eee5;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--lime);
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            width: 90%;
+            max-width: 1120px;
+            margin: 38px auto;
+        }
+
+        /* PAGE HEADING */
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .heading-tag {
+            display: inline-block;
+            background: #e6f1dc;
+            color: #54813c;
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-heading h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            color: var(--forest);
+            margin-bottom: 9px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* MAIN RECOMMENDATION CARD */
+
+        .recommendation-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(125deg, #123d29, #286141);
+            color: white;
+            border-radius: 25px;
+            padding: 39px 42px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 35px rgba(23, 63, 43, 0.15);
+            animation: fadeUp 0.7s ease;
+        }
+
+        .recommendation-card::before {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: 120px;
+            top: -190px;
+        }
+
+        .recommendation-card::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            background: rgba(183,220,121,0.07);
+            border-radius: 50%;
+            right: -75px;
+            bottom: -125px;
+        }
+
+        .recommendation-info {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .recommendation-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #c4e68c;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .recommendation-info h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .fertilizer-name {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 31px;
+            font-weight: 800;
+            color: var(--lime);
+            margin-bottom: 14px;
+        }
+
+        .recommendation-info p {
+            color: #d5e5d8;
+            font-size: 14px;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .recommendation-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.11);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: #e6f2e7;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        /* MODEL SCORE */
+
+        .prediction-score-box {
+            position: relative;
+            z-index: 1;
+            min-width: 170px;
+            text-align: center;
+        }
+
+        .prediction-score-circle {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            background: conic-gradient(
+                var(--lime) 0deg,
+                rgba(255,255,255,0.15) 0deg
+            );
+            position: relative;
+            transition: background 1s ease;
+        }
+
+        .prediction-score-circle::before {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #205239;
+        }
+
+        .prediction-score-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .prediction-score-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 35px;
+            font-weight: 800;
+        }
+
+        .prediction-score-label {
+            font-size: 10px;
+            color: #d5e7d8;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .score-caption {
+            color: #d4e5d8;
+            font-size: 11px;
+            margin-top: 12px;
+        }
+
+        /* SECTION HEADINGS */
+
+        .section-heading {
+            margin: 33px 0 17px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            font-weight: 700;
+            color: var(--forest);
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        /* TOP 3 PREDICTIONS */
+
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .prediction-card {
+            position: relative;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 22px;
+            transition: 0.3s ease;
+            box-shadow: 0 5px 18px rgba(30,65,40,0.04);
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30,65,40,0.09);
+        }
+
+        .prediction-card.first {
+            border: 2px solid #91bd65;
+            background: linear-gradient(145deg, #ffffff, #f4faed);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: #edf4e8;
+            color: #426b35;
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .first .rank-badge {
+            background: #dff0ca;
+            color: #35612d;
+        }
+
+        .prediction-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 19px;
+            color: var(--forest);
+            margin-bottom: 7px;
+        }
+
+        .prediction-card p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 15px;
+        }
+
+        .prediction-percent {
+            font-family: 'Outfit', sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+            color: #32633b;
+        }
+
+        .prediction-track {
+            width: 100%;
+            height: 8px;
+            background: #e9eee6;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 13px;
+        }
+
+        .prediction-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6c9f43, #b6dc79);
+            border-radius: 20px;
+            transition: width 1s ease;
+        }
+
+        /* EXPLANATION */
+
+        .explanation-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 24px;
+            box-shadow: 0 5px 18px rgba(30,65,40,0.04);
+        }
+
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 17px;
+        }
+
+        .explanation-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            background: #e8f2dd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .explanation-header h3 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--forest);
+            font-size: 19px;
+        }
+
+        .explanation-header p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .explanation-text {
+            color: #536b58;
+            font-size: 13px;
+            line-height: 1.9;
+            padding: 16px 18px;
+            background: #f6faf2;
+            border-left: 4px solid #8eb75c;
+            border-radius: 9px;
+        }
+
+        /* INPUT DETAILS */
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 13px;
+        }
+
+        .input-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 17px;
+            transition: 0.25s;
+        }
+
+        .input-card:hover {
+            transform: translateY(-3px);
+            border-color: #b9d29e;
+        }
+
+        .input-label {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .input-value {
+            font-family: 'Outfit', sans-serif;
+            color: var(--forest);
+            font-size: 17px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        /* QUANTITY ESTIMATION */
+
+        .quantity-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            overflow: hidden;
+            margin-top: 25px;
+            box-shadow: 0 6px 20px rgba(30,65,40,0.05);
+        }
+
+        .quantity-header {
+            background: linear-gradient(115deg, #173f2b, #2a6541);
+            padding: 24px 27px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quantity-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 21px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .quantity-header p {
+            color: #d0e2d3;
+            font-size: 12px;
+        }
+
+        .area-badge {
+            background: #c3e58e;
+            color: #21482f;
+            border-radius: 20px;
+            padding: 9px 14px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .quantity-body {
+            padding: 25px;
+        }
+
+        .quantity-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .quantity-stat {
+            background: #f5f9f1;
+            border: 1px solid #e7eee2;
+            border-radius: 13px;
+            padding: 17px;
+        }
+
+        .quantity-stat small {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .quantity-stat strong {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            color: var(--forest);
+            font-size: 20px;
+        }
+
+        .quantity-stat span {
+            display: block;
+            font-size: 10px;
+            color: #839184;
+            margin-top: 4px;
+        }
+
+        .quantity-product {
+            border: 1px solid #e5ecdf;
+            border-radius: 14px;
+            padding: 19px;
+            margin-bottom: 18px;
+        }
+
+        .quantity-product h3 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--forest);
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .meta-pill {
+            background: #edf4e8;
+            color: #426b35;
+            padding: 7px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* NUTRIENT TABLE */
+
+        .table-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            color: var(--forest);
+            margin: 23px 0 13px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        .nutrient-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 570px;
+            background: white;
+        }
+
+        .nutrient-table th {
+            background: #edf4e8;
+            color: #315a35;
+            padding: 13px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .nutrient-table td {
+            padding: 13px 14px;
+            border-top: 1px solid #edf0e9;
+            font-size: 12px;
+            color: #536b58;
+        }
+
+        .nutrient-table tr:hover td {
+            background: #f8fbf5;
+        }
+
+        .positive {
+            color: #27804a !important;
+            font-weight: 700;
+        }
+
+        .negative {
+            color: #bd5145 !important;
+            font-weight: 700;
+        }
+
+        /* WARNINGS */
+
+        .warning-box {
+            background: #fff8e8;
+            border: 1px solid #f2dfaa;
+            border-left: 4px solid #d6a63a;
+            border-radius: 11px;
+            padding: 15px 18px;
+            color: #80611e;
+            font-size: 12px;
+            line-height: 1.8;
+            margin-top: 18px;
+        }
+
+        .warning-box strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #755414;
+        }
+
+        .no-quantity {
+            background: #f5f9f1;
+            border: 1px solid #e2eadc;
+            border-radius: 12px;
+            padding: 19px;
+            color: #536b58;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* COST CARD */
+
+        .cost-card {
+            background: linear-gradient(110deg, #f1f7e9, #fbfdf8);
+            border: 1px solid #dce9ce;
+            border-radius: 15px;
+            padding: 21px;
+            margin-top: 19px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cost-card h3 {
+            font-family: 'Outfit', sans-serif;
+            color: #315a35;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .cost-card p {
+            font-size: 11px;
+            color: #718174;
+            line-height: 1.6;
+        }
+
+        .cost-value {
+            font-family: 'Outfit', sans-serif;
+            color: #245b37;
+            font-size: 27px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* ACTION BUTTONS */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 13px;
+            flex-wrap: wrap;
+            margin: 35px 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--leaf);
+            color: white;
+            box-shadow: 0 5px 13px rgba(36,91,55,0.15);
+        }
+
+        .btn-primary:hover {
+            background: var(--forest);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: #e3edd9;
+            color: #245b37;
+        }
+
+        .btn-secondary:hover {
+            background: #d3e4c5;
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #819080;
+            font-size: 12px;
+            border-top: 1px solid #e5ecdf;
+        }
+
+        /* ANIMATION */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE DESIGN */
+
+        @media (max-width: 850px) {
+            .recommendation-card {
+                padding: 30px;
+            }
+
+            .input-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .prediction-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 15px 5%;
+            }
+
+            .brand {
+                font-size: 22px;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 25px;
+            }
+
+            .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .recommendation-card {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 28px 20px;
+            }
+
+            .recommendation-info h2 {
+                font-size: 26px;
+            }
+
+            .fertilizer-name {
+                font-size: 27px;
+            }
+
+            .prediction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quantity-details {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .cost-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .nav-links a:first-child {
+                display: none;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prediction-score-circle {
+                width: 140px;
+                height: 140px;
+            }
+
+            .prediction-score-circle::before {
+                width: 116px;
+                height: 116px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+        <div class="brand">
+            Smart<span>Fert</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="{{ url_for('recommend_form') }}">New Recommendation ↗</a>
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <!-- PAGE HEADING -->
+
+        <header class="page-heading">
+            <div class="heading-tag">
+                ✦ AI-Powered Agriculture
+            </div>
+
+            <h1>Your Fertilizer Recommendation</h1>
+
+            <p>
+                Your soil and crop inputs have been analysed by our
+                machine learning model to identify suitable fertilizers.
+            </p>
+        </header>
+
+
+        <!-- MAIN RECOMMENDATION -->
+
+        <section class="recommendation-card">
+
+            <div class="recommendation-info">
+
+                <div class="recommendation-label">
+                    ✦ TOP ML RECOMMENDATION
+                </div>
+
+                <h2>Recommended Fertilizer</h2>
+
+                <div class="fertilizer-name">
+                    {{ predicted_fertilizer }}
+                </div>
+
+                <p>
+                    Based on your selected crop, soil type, environmental
+                    conditions and NPK values, the machine learning model
+                    has identified this fertilizer as its highest-ranked
+                    recommendation.
+                </p>
+
+                <div class="recommendation-note">
+                    ✓ Selected from your ML model's prediction results
+                </div>
+
+            </div>
+
+
+            <div class="prediction-score-box">
+
+                <div
+                    class="prediction-score-circle"
+                    id="mainScoreCircle"
+                    data-score="{{ prediction_score if prediction_score is defined else (predictions[0].score if predictions else 0) }}"
+                >
+
+                    <div class="prediction-score-inner">
+
+                        <div class="prediction-score-number">
+                            {{ "%.1f"|format((prediction_score if prediction_score is defined else (predictions[0].score if predictions else 0))|float) }}%
+                        </div>
+
+                        <div class="prediction-score-label">
+                            MODEL SCORE
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="score-caption">
+                    Top recommendation score
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOP 3 ML PREDICTIONS -->
+
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">
+                    Top 3 ML Predictions
+                </h2>
+
+                <p class="section-subtitle">
+                    Ranked fertilizer predictions generated by your trained model.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="prediction-grid">
+
+            {% for item in predictions %}
+
+                <article class="prediction-card {% if loop.first %}first{% endif %}">
+
+                    <div class="rank-badge">
+                        {% if loop.first %}
+                            ★ BEST MATCH
+                        {% elif loop.index == 2 %}
+                            #2 SECOND MATCH
+                        {% else %}
+                            #{{ loop.index }} THIRD MATCH
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ item.fertilizer }}</h3>
+
+                    <p>
+                        {% if loop.first %}
+                            Highest-ranked ML prediction
+                        {% else %}
+                            Alternative ML prediction
+                        {% endif %}
+                    </p>
+
+                    <div class="prediction-percent">
+                        {{ "%.2f"|format(item.score|float) }}%
+                    </div>
+
+                    <div class="prediction-track">
+                        <div
+                            class="prediction-fill"
+                            data-score="{{ item.score }}"
+                        ></div>
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- WHY THIS FERTILIZER -->
+
+        <section class="explanation-card">
+
+            <div class="explanation-header">
+
+                <div class="explanation-icon">
+                    💡
+                </div>
+
+                <div>
+                    <h3>Why This Fertilizer?</h3>
+
+                    <p>
+                        Understanding your ML recommendation
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="explanation-text">
+
+                {% if explanations is defined and explanations %}
+
+                    {% if explanations is mapping %}
+
+                        {% if explanations.get(predicted_fertilizer) %}
+                            {{ explanations.get(predicted_fertilizer) }}
+                        {% else %}
+                            The machine learning model ranked
+                            {{ predicted_fertilizer }} as the best
+                            match among the fertilizer classes based
+                            on your submitted input values.
+                        {% endif %}
+
+                    {% else %}
+
+                        {% for explanation in explanations %}
+                            {{ explanation }}
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% else %}
+
+                    The machine learning model selected
+                    {{ predicted_fertilizer }} as its highest-ranked
+                    prediction after analysing your crop, soil nutrients
+                    and environmental conditions.
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- USER INPUT DETAILS -->
+
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">
+                    Your Submitted Soil & Crop Details
+                </h2>
+
+                <p class="section-subtitle">
+                    These are the input values used by the ML model.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="input-grid">
+
+            <div class="input-card">
+                <div class="input-label">Crop Type</div>
+                <div class="input-value">
+                    {{ input_data['Crop_Type'] }}
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Soil Type</div>
+                <div class="input-value">
+                    {{ input_data['Soil_Type'] }}
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Temperature</div>
+                <div class="input-value">
+                    {{ input_data['Temparature'] }} °C
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Humidity</div>
+                <div class="input-value">
+                    {{ input_data['Humidity'] }} %
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Soil Moisture</div>
+                <div class="input-value">
+                    {{ input_data['Moisture'] }} %
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Nitrogen (N)</div>
+                <div class="input-value">
+                    {{ input_data['Nitrogen'] }}
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Phosphorus (P)</div>
+                <div class="input-value">
+                    {{ input_data['Phosphorous'] }}
+                </div>
+            </div>
+
+            <div class="input-card">
+                <div class="input-label">Potassium (K)</div>
+                <div class="input-value">
+                    {{ input_data['Potassium'] }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- QUANTITY AND COST ESTIMATION -->
+
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">
+                    Fertilizer Quantity & Cost Estimation
+                </h2>
+
+                <p class="section-subtitle">
+                    Estimated quantity of the recommended ML fertilizer
+                    for your selected crop and cultivation area.
+                </p>
+            </div>
+        </div>
+
+
+        <section class="quantity-card">
+
+            <div class="quantity-header">
+
+                <div>
+                    <h2>Recommended Fertilizer Requirement</h2>
+
+                    <p>
+                        Quantity and cost estimation for the selected crop.
+                    </p>
+                </div>
+
+                <div class="area-badge">
+                    {{ area|default(1.0) }} Acre
+                </div>
+
+            </div>
+
+
+            <div class="quantity-body">
+
+                {% if quantity_available and quantity_records %}
+
+                    {% set matching_records = quantity_records
+                        |selectattr('ml_fertilizer', 'equalto', predicted_fertilizer)
+                        |list
+                    %}
+
+                    {% if matching_records %}
+
+                        {% for row in matching_records %}
+
+                            <div class="quantity-product">
+
+                                <h3>
+                                    {{ row.ml_fertilizer }}
+                                </h3>
+
+                                <div class="product-meta">
+
+                                    <span class="meta-pill">
+                                        Product: {{ row.product_name }}
+                                    </span>
+
+                                    <span class="meta-pill">
+                                        Grade: {{ row.grade }}
+                                    </span>
+
+                                    <span class="meta-pill">
+                                        Limiting Nutrient:
+                                        {{ row.limiting_nutrient }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="quantity-details">
+
+                                <div class="quantity-stat">
+                                    <small>Recommended Quantity</small>
+
+                                    <strong>
+                                        {{ "%.2f"|format(row.quantity_kg|float) }} kg
+                                    </strong>
+
+                                    <span>For selected land area</span>
+                                </div>
+
+
+                                <div class="quantity-stat">
+                                    <small>Price per KG</small>
+
+                                    <strong>
+                                        {% if row.price_per_kg is not none %}
+                                            ₹{{ "%.2f"|format(row.price_per_kg|float) }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </strong>
+
+                                    <span>Reference fertilizer price</span>
+                                </div>
+
+
+                                <div class="quantity-stat">
+                                    <small>Estimated Cost</small>
+
+                                    <strong>
+                                        {% if row.estimated_cost is not none %}
+                                            ₹{{ "%.2f"|format(row.estimated_cost|float) }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </strong>
+
+                                    <span>Estimated fertilizer expense</span>
+                                </div>
+
+                            </div>
+
+
+                            <!-- NUTRIENT REQUIREMENT TABLE -->
+
+                            {% if row.nutrients %}
+
+                                <h3 class="table-heading">
+                                    Nutrient Requirement & Supply Analysis
+                                </h3>
+
+                                <div class="table-wrap">
+
+                                    <table class="nutrient-table">
+
+                                        <thead>
+                                            <tr>
+                                                <th>Nutrient</th>
+                                                <th>Required (kg)</th>
+                                                <th>Supplied (kg)</th>
+                                                <th>Deficit (kg)</th>
+                                                <th>Excess (kg)</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            {% for nutrient, details in row.nutrients.items() %}
+
+                                                <tr>
+                                                    <td>
+                                                        <strong>{{ nutrient }}</strong>
+                                                    </td>
+
+                                                    <td>
+                                                        {{ "%.2f"|format(details.required_kg|float) }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ "%.2f"|format(details.supplied_kg|float) }}
+                                                    </td>
+
+                                                    <td class="{% if details.deficit_kg|float > 0 %}negative{% else %}positive{% endif %}">
+                                                        {{ "%.2f"|format(details.deficit_kg|float) }}
+                                                    </td>
+
+                                                    <td class="{% if details.excess_kg|float > 0 %}negative{% else %}positive{% endif %}">
+                                                        {{ "%.2f"|format(details.excess_kg|float) }}
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- LIMITING NUTRIENT WARNING -->
+
+                            {% if row.limiting_nutrient %}
+
+                                <div class="warning-box">
+                                    <strong>⚠ Nutrient Consideration</strong>
+
+                                    {{ row.limiting_nutrient }}
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- COST SUMMARY -->
+
+                            <div class="cost-card">
+
+                                <div>
+                                    <h3>Estimated Fertilizer Cost</h3>
+
+                                    <p>
+                                        Based on the recommended quantity
+                                        and available reference price.
+                                        Actual market prices may vary.
+                                    </p>
+                                </div>
+
+                                <div class="cost-value">
+
+                                    {% if row.estimated_cost is not none %}
+                                        ₹{{ "%.2f"|format(row.estimated_cost|float) }}
+                                    {% else %}
+                                        Price unavailable
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="no-quantity">
+                            <strong>Quantity estimation unavailable.</strong>
+                            No matching quantity record was found for
+                            the ML-predicted fertilizer
+                            {{ predicted_fertilizer }}.
+                            The fertilizer prediction is still available above.
+                        </div>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="no-quantity">
+
+                        <strong>Quantity estimation unavailable.</strong>
+
+                        {% if quantity_message %}
+                            {{ quantity_message }}
+                        {% else %}
+                            A verified quantity reference could not be
+                            found for this fertilizer and crop combination.
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if quantity_message and quantity_available %}
+
+                    <div class="warning-box">
+                        <strong>Important Note</strong>
+
+                        {{ quantity_message }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL ACTION BUTTONS -->
+
+        <div class="actions">
+
+            <a href="{{ url_for('recommend_form') }}" class="btn btn-primary">
+                ↻ Make Another Prediction
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        SmartFert | Smart Fertilizer Recommendation and Soil Health Analysis System
+    </footer>
+
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // MAIN PREDICTION SCORE CIRCLE
+
+            const scoreCircle =
+                document.getElementById("mainScoreCircle");
+
+            if (scoreCircle) {
+
+                let score = parseFloat(scoreCircle.dataset.score);
+
+                if (isNaN(score)) {
+                    score = 0;
+                }
+
+                score = Math.max(0, Math.min(100, score));
+
+                setTimeout(function () {
+
+                    const degrees = score * 3.6;
+
+                    scoreCircle.style.background =
+                        "conic-gradient(#b6dc79 0deg, #b6dc79 " +
+                        degrees + "deg, rgba(255,255,255,0.15) " +
+                        degrees + "deg, rgba(255,255,255,0.15) 360deg)";
+
+                }, 150);
+            }
+
+
+            // ANIMATE TOP 3 PREDICTION BARS
+
+            document.querySelectorAll(".prediction-fill").forEach(
+                function (bar) {
+
+                    let score = parseFloat(bar.dataset.score);
+
+                    if (isNaN(score)) {
+                        score = 0;
+                    }
+
+                    score = Math.max(0, Math.min(100, score));
+
+                    setTimeout(function () {
+                        bar.style.width = score + "%";
+                    }, 250);
+
+                }
+            );
+
+        });
+    </script>
+
+</body>
+</html>

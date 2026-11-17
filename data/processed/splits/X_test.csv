@@ -1,0 +1,29 @@
+Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitrogen,Potassium,Phosphorous
+25,50,32,Clayey,Pulses,24,0,19
+32,62,34,Red,Ground Nuts,15,0,37
+28,61,33,Loamy,pomegranate,31,25,38
+30,60,27,Loamy,Sugarcane,12,0,40
+20,69,63,Loamy,kidneybeans,23,23,6
+25,50,26,Red,Ground Nuts,15,14,11
+29,58,37,Sandy,Millets,8,0,15
+29,58,43,Clayey,Paddy,24,0,18
+34,65,38,Clayey,Paddy,39,0,0
+12,90,28,Loamy,orange,8,16,6
+29,58,34,Sandy,Millets,15,0,37
+28,54,35,Black,Millets,41,0,0
+34,65,48,Loamy,Wheat,23,0,19
+30,60,38,Sandy,Millets,10,0,14
+24,91,34,Sandy,orange,22,17,5
+25,81,41,Clayey,rice,75,47,36
+27,53,35,Black,Oil seeds,37,0,0
+26,82,27,Loamy,rice,73,48,36
+26,52,36,Clayey,Pulses,7,16,20
+30,83,63,Loamy,pomegranate,39,30,38
+36,68,38,Sandy,Barley,7,9,30
+26,52,38,Sandy,Maize,37,0,0
+22,81,45,Clayey,rice,78,43,36
+36,68,33,Black,Oil seeds,13,0,14
+27,53,34,Black,Oil seeds,42,0,0
+29,58,55,Loamy,Sugarcane,8,8,33
+26,66,30,Loamy,coffee,80,30,25
+30,60,26,Black,Oil seeds,8,9,30

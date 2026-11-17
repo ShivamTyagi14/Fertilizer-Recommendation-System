@@ -1,0 +1,17 @@
+crop_category,representative_crop,season,N_kg_ha,P2O5_kg_ha,K2O_kg_ha,region,source,status,notes,production_condition
+Maize,Maize,Kharif,80.0,45.0,40.0,Bareilly Uttar Pradesh,ICAR-IISS District-wise GFR June 2026,Verified,General district recommendation,Not specified
+Millets,Pearl Millet,Not specified,,,,Bareilly Uttar Pradesh,To be verified,Pending,Representative crop and local recommendation need confirmation,Not specified
+Oil seeds,Mustard,Rabi,80.0,40.0,40.0,India - General reference,ICAR GOBARdhan Package of Practices,Regional reference,General ICAR reference; not confirmed as Bareilly-specific. Verify local soil-test recommendation.,Not specified
+Paddy,Rice,Not specified,100.0,45.0,40.0,Bareilly Uttar Pradesh,ICAR-IISS District-wise GFR June 2026,Verified,General district recommendation,Not specified
+Pulses,Chickpea,Not specified,,,,Bareilly Uttar Pradesh,To be verified,Pending,Representative crop and local recommendation need confirmation,Not specified
+Sugarcane,Sugarcane,Not specified,230.0,55.0,70.0,Bareilly Uttar Pradesh,ICAR-IISS District-wise GFR June 2026,Verified,General district recommendation,Not specified
+Tobacco,Chewing Tobacco,Not specified,,,,Bareilly Uttar Pradesh,Kerala Agricultural University - comparative reference,Pending,Kerala reference found; Bareilly recommendation still pending,Not specified
+Maize,Maize,Rabi,60.0,45.0,30.0,Bareilly Uttar Pradesh,ICAR-IISS District-wise GFR June 2026,Verified,Bareilly district recommendation,Not specified
+Millets,Proso Millet,Kharif / regional,40.0,20.0,,Uttar Pradesh,ICAR-IIMR Proso Millet Package,Regional reference,ICAR reference gives N and P2O5; K2O not specified. Confirm local suitability.,Not specified
+Barley,Feed Barley,Rabi,60.0,30.0,20.0,North-Western Plains,ICAR-IIWBR,Regional reference,Regional rate; confirm Bareilly field suitability,"Irrigated, timely sown"
+Barley,Feed Barley,Rabi,40.0,20.0,20.0,North-Western Plains,ICAR-IIWBR,Regional reference,Regional rate; confirm Bareilly field suitability,Rainfed
+Cotton,Cotton,Kharif,120.0,60.0,60.0,India - General reference,ICAR Kharif Agro-Advisory 2025,Regional reference,General rainfed cotton recommendation,Rainfed
+Cotton,Cotton,Kharif,150.0,75.0,75.0,India - General reference,ICAR Kharif Agro-Advisory 2025,Regional reference,General irrigated cotton recommendation,Irrigated
+Ground Nuts,Groundnut,Kharif,20.0,40.0,45.0,Uttar Pradesh,ICAR Groundnut Nutrient Management Manual,Regional reference,Uttar Pradesh rainfed reference; confirm local soil test,Rainfed
+Ground Nuts,Groundnut,Kharif,40.0,50.0,40.0,Uttar Pradesh,ICAR Groundnut Nutrient Management Manual,Regional reference,Uttar Pradesh irrigated reference; confirm local soil test,Irrigated
+Pulses,Chickpea,Rabi,18.0,46.0,,Kanpur Uttar Pradesh,ICAR-IIPR Kanpur,Partial reference,Sulphur 20 kg/ha also included; K2O not specified,"Partial irrigated, loam/clay loam reference"

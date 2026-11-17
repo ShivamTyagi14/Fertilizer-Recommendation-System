@@ -1,0 +1,144 @@
+=================================================================
+FERTILIZER RECOMMENDATION EXPLANATION
+=================================================================
+Crop: Rice
+Season: Not specified
+Production condition: Not specified
+Area: 1.00 acres
+Combination: Combination A - DAP based
+
+FERTILIZER CONTRIBUTIONS
+
+DAP: 39.59 kg
+  Nitrogen: 7.13 kg
+  P2O5: 18.21 kg
+  K2O: 0.00 kg
+  Sulphur: 0.00 kg
+
+Urea: 72.48 kg
+  Nitrogen: 33.34 kg
+  P2O5: 0.00 kg
+  K2O: 0.00 kg
+  Sulphur: 0.00 kg
+
+MOP: 26.98 kg
+  Nitrogen: 0.00 kg
+  P2O5: 0.00 kg
+  K2O: 16.19 kg
+  Sulphur: 0.00 kg
+
+NUTRIENT REQUIREMENT AND SUPPLY
+Nitrogen: 40.47 kg required, 40.47 kg supplied
+P2O5: 18.21 kg required, 18.21 kg supplied
+K2O: 16.19 kg required, 16.19 kg supplied
+Additional sulphur supplied: 0.00 kg
+
+WHY THESE FERTILIZERS ARE INCLUDED
+DAP supplies phosphorus and may also contribute nitrogen or sulphur depending on its composition.
+Urea supplies additional nitrogen.
+MOP supplies potassium.
+
+IMPORTANT LIMITATIONS
+This is a baseline nutrient-based mathematical estimate.
+Soil-test N, P and K have not been deducted because their units and laboratory methods are not confirmed.
+Nutrient-use efficiency, application timing, split doses and crop-specific additional nutrient requirements are not included.
+The three combinations are mathematical alternatives, not automatically interchangeable agronomic prescriptions.
+Consult a local agricultural expert before field application.
+=================================================================
+
+=================================================================
+FERTILIZER RECOMMENDATION EXPLANATION
+=================================================================
+Crop: Rice
+Season: Not specified
+Production condition: Not specified
+Area: 1.00 acres
+Combination: Combination B - SSP based
+
+FERTILIZER CONTRIBUTIONS
+
+SSP: 113.82 kg
+  Nitrogen: 0.00 kg
+  P2O5: 18.21 kg
+  K2O: 0.00 kg
+  Sulphur: 12.52 kg
+
+Urea: 87.98 kg
+  Nitrogen: 40.47 kg
+  P2O5: 0.00 kg
+  K2O: 0.00 kg
+  Sulphur: 0.00 kg
+
+MOP: 26.98 kg
+  Nitrogen: 0.00 kg
+  P2O5: 0.00 kg
+  K2O: 16.19 kg
+  Sulphur: 0.00 kg
+
+NUTRIENT REQUIREMENT AND SUPPLY
+Nitrogen: 40.47 kg required, 40.47 kg supplied
+P2O5: 18.21 kg required, 18.21 kg supplied
+K2O: 16.19 kg required, 16.19 kg supplied
+Additional sulphur supplied: 12.52 kg
+
+WHY THESE FERTILIZERS ARE INCLUDED
+SSP supplies phosphorus and may also contribute nitrogen or sulphur depending on its composition.
+Urea supplies additional nitrogen.
+MOP supplies potassium.
+
+IMPORTANT LIMITATIONS
+This is a baseline nutrient-based mathematical estimate.
+Soil-test N, P and K have not been deducted because their units and laboratory methods are not confirmed.
+Nutrient-use efficiency, application timing, split doses and crop-specific additional nutrient requirements are not included.
+The three combinations are mathematical alternatives, not automatically interchangeable agronomic prescriptions.
+Consult a local agricultural expert before field application.
+=================================================================
+
+=================================================================
+FERTILIZER RECOMMENDATION EXPLANATION
+=================================================================
+Crop: Rice
+Season: Not specified
+Production condition: Not specified
+Area: 1.00 acres
+Combination: Combination C - TSP based
+
+FERTILIZER CONTRIBUTIONS
+
+TSP: 39.59 kg
+  Nitrogen: 0.00 kg
+  P2O5: 18.21 kg
+  K2O: 0.00 kg
+  Sulphur: 0.00 kg
+
+Urea: 87.98 kg
+  Nitrogen: 40.47 kg
+  P2O5: 0.00 kg
+  K2O: 0.00 kg
+  Sulphur: 0.00 kg
+
+MOP: 26.98 kg
+  Nitrogen: 0.00 kg
+  P2O5: 0.00 kg
+  K2O: 16.19 kg
+  Sulphur: 0.00 kg
+
+NUTRIENT REQUIREMENT AND SUPPLY
+Nitrogen: 40.47 kg required, 40.47 kg supplied
+P2O5: 18.21 kg required, 18.21 kg supplied
+K2O: 16.19 kg required, 16.19 kg supplied
+Additional sulphur supplied: 0.00 kg
+
+WHY THESE FERTILIZERS ARE INCLUDED
+TSP supplies phosphorus and may also contribute nitrogen or sulphur depending on its composition.
+Urea supplies additional nitrogen.
+MOP supplies potassium.
+
+IMPORTANT LIMITATIONS
+This is a baseline nutrient-based mathematical estimate.
+Soil-test N, P and K have not been deducted because their units and laboratory methods are not confirmed.
+Nutrient-use efficiency, application timing, split doses and crop-specific additional nutrient requirements are not included.
+The three combinations are mathematical alternatives, not automatically interchangeable agronomic prescriptions.
+Consult a local agricultural expert before field application.
+=================================================================
+

@@ -1,0 +1,6 @@
+Check,Result
+Required columns,PASS
+Missing values,PASS
+Duplicate fertilizer names,PASS
+Nutrient percentage range,PASS
+Known fertilizer grades,PASS

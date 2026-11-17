@@ -1,0 +1,318 @@
+
+/* =========================================
+   SMART FERTILIZER RECOMMENDATION SYSTEM
+   Main Dashboard Styling
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f3f7f2;
+    color: #26352b;
+    line-height: 1.6;
+}
+
+/* Main page container */
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(30, 70, 40, 0.08);
+}
+
+/* Header */
+
+header {
+    background: linear-gradient(135deg, #14532d, #238b45);
+    color: white;
+    padding: 32px;
+    border-radius: 13px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #e5f5e8;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+header a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Section headings */
+
+h2 {
+    color: #176534;
+    font-size: 21px;
+    margin: 28px 0 18px;
+    padding-bottom: 9px;
+    border-bottom: 2px solid #e2eee2;
+}
+
+h3 {
+    color: #205c36;
+    margin-bottom: 8px;
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+/* Form layout */
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+form .form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 7px;
+    color: #35483a;
+}
+
+/* Two-column form layout */
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 2px;
+}
+
+/* Keep section headings and submit button full width */
+
+form h2,
+form button {
+    grid-column: 1 / -1;
+}
+
+/* Input fields and dropdowns */
+
+input,
+select {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #d4dfd4;
+    border-radius: 8px;
+    background: #fbfdfb;
+    color: #26352b;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #26934c;
+    box-shadow: 0 0 0 3px rgba(38, 147, 76, 0.12);
+    background: #ffffff;
+}
+
+input::placeholder {
+    color: #9aa89c;
+}
+
+/* Buttons */
+
+button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 15px;
+    background: #218542;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #176b34;
+    transform: translateY(-1px);
+}
+
+/* Result cards */
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e0ebe0;
+    border-left: 5px solid #27934b;
+    border-radius: 11px;
+    padding: 22px;
+    margin: 15px 0;
+    box-shadow: 0 3px 12px rgba(30, 70, 40, 0.05);
+}
+
+.card h1 {
+    color: #176534;
+    font-size: 29px;
+    margin: 8px 0;
+}
+
+.card h3 {
+    font-size: 19px;
+}
+
+.card p {
+    color: #66756a;
+    margin-bottom: 0;
+}
+
+/* Result page sections */
+
+section {
+    margin: 28px 0;
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 25px;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+th {
+    background: #e6f2e7;
+    color: #185c31;
+    font-weight: 700;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #e5ece5;
+}
+
+tr:nth-child(even) {
+    background: #f8fbf8;
+}
+
+tr:hover {
+    background: #eff7ef;
+}
+
+/* General links */
+
+.container > a,
+section a {
+    color: #1d793b;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.container > a:hover,
+section a:hover {
+    text-decoration: underline;
+}
+
+/* Error messages */
+
+.error {
+    background: #fff0f0;
+    color: #b42318;
+    border: 1px solid #f5c2c0;
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* Dashboard cards and crop lists */
+
+.stats-grid,
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin: 20px 0;
+}
+
+.stats-grid .card,
+.dashboard-grid .card {
+    margin: 0;
+}
+
+ul {
+    padding-left: 22px;
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+/* Responsive layout for tablets and phones */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 95%;
+        padding: 18px;
+        margin: 15px auto;
+    }
+
+    header {
+        padding: 23px 19px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .stats-grid,
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 13px;
+    }
+}

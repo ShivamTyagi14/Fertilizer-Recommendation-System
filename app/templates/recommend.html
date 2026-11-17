@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartFert | Fertilizer Recommendation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #174d32;
+            --dark-green: #0b2d20;
+            --light-green: #e9f3df;
+            --lime: #b8e986;
+            --cream: #f8f8f0;
+            --text: #24382c;
+            --muted: #829087;
+            --border: #e4e9df;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(7, 29, 17, 0.58),
+                    rgba(7, 29, 17, 0.66)
+                ),
+                url("{{ url_for('static', filename='images/pexels-dinukagunawardana-17903068.jpg') }}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        /* PAGE WRAPPER */
+
+        .page-wrapper {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 5% 15%,
+                    rgba(176, 221, 137, 0.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 95% 80%,
+                    rgba(95, 153, 91, 0.10),
+                    transparent 30%
+                );
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            width: min(94%, 1400px);
+            margin: auto;
+            padding: 20px 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 14px;
+
+            display: grid;
+            place-items: center;
+
+            background: var(--green);
+            color: white;
+            font-size: 24px;
+
+            box-shadow: 0 5px 15px rgba(23, 77, 50, 0.25);
+        }
+
+        .brand-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .brand-name span {
+            color: var(--lime);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            text-decoration: none;
+            color: var(--green);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            padding: 11px 18px;
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.92);
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* INTRODUCTION */
+
+        .intro {
+            text-align: center;
+            padding: 28px 15px 25px;
+        }
+
+        .intro-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 15px;
+            border-radius: 30px;
+
+            background: rgba(226, 245, 210, 0.95);
+            color: #47743a;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+
+            margin-bottom: 15px;
+        }
+
+        .intro h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(30px, 4vw, 45px);
+            line-height: 1.15;
+            color: white;
+            letter-spacing: -1.5px;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        .intro h1 span {
+            color: var(--lime);
+        }
+
+        .intro p {
+            max-width: 600px;
+            margin: 12px auto 0;
+
+            color: rgba(255,255,255,0.92);
+            font-size: 14px;
+            line-height: 1.7;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+        }
+
+        /* MAIN LAYOUT */
+
+        .main-layout {
+            width: min(94%, 1180px);
+            margin: 10px auto 55px;
+
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 23px;
+
+            align-items: start;
+        }
+
+        /* LEFT INFORMATION PANEL */
+
+        .side-panel {
+            position: sticky;
+            top: 20px;
+
+            padding: 25px 22px;
+
+            border-radius: 23px;
+            color: white;
+
+            background:
+                linear-gradient(
+                    155deg,
+                    rgba(23, 77, 50, 0.97),
+                    rgba(9, 45, 32, 0.97)
+                );
+
+            border: 1px solid rgba(255,255,255,0.18);
+
+            box-shadow: 0 15px 35px rgba(0,0,0,0.20);
+
+            overflow: hidden;
+        }
+
+        .side-panel::before {
+            content: "";
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+
+            background: rgba(186, 232, 137, 0.08);
+
+            top: -100px;
+            right: -100px;
+        }
+
+        .side-panel-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .side-icon {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 18px;
+
+            display: grid;
+            place-items: center;
+
+            background: rgba(195, 238, 154, 0.15);
+            border: 1px solid rgba(195, 238, 154, 0.25);
+
+            font-size: 29px;
+            margin-bottom: 20px;
+        }
+
+        .side-panel h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .side-panel > div > p {
+            font-size: 12px;
+            color: #d0e3d2;
+            line-height: 1.7;
+        }
+
+        .side-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.16);
+            margin: 24px 0;
+        }
+
+        .side-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+
+            width: 29px;
+            height: 29px;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background: var(--lime);
+            color: #163b24;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .side-step h3 {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .side-step p {
+            font-size: 10px;
+            line-height: 1.5;
+            color: #c0d5c2;
+        }
+
+        .area-note {
+            margin-top: 27px;
+            padding: 15px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.13);
+        }
+
+        .area-note small {
+            display: block;
+            font-size: 10px;
+            color: #c4d9c6;
+            margin-bottom: 6px;
+        }
+
+        .area-note strong {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            color: var(--lime);
+        }
+
+        .area-note span {
+            display: block;
+            font-size: 10px;
+            color: #c4d9c6;
+            margin-top: 4px;
+        }
+
+        /* FORM CONTAINER */
+
+        .form-container {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 23px;
+
+            padding: 27px;
+
+            box-shadow: 0 15px 45px rgba(0,0,0,0.17);
+        }
+
+        .form-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .form-top h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            color: var(--dark-green);
+        }
+
+        .required-note {
+            font-size: 10px;
+            color: #89958a;
+        }
+
+        .required-note span {
+            color: #d66a53;
+            font-weight: 800;
+        }
+
+        /* PROGRESS BAR */
+
+        .progress-section {
+            padding: 15px 17px;
+
+            background: #f5f8f1;
+            border-radius: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 9px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .progress-info span:first-child {
+            color: #536b55;
+        }
+
+        .progress-info span:last-child {
+            color: #6a9b42;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #e1e9db;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+
+            border-radius: 10px;
+            background: linear-gradient(90deg, #74aa45, #b8e986);
+
+            transition: width 0.3s ease;
+        }
+
+        /* FORM SECTIONS */
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding-bottom: 13px;
+            margin-bottom: 17px;
+
+            border-bottom: 1px solid #edf0e9;
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: #edf5e7;
+            font-size: 18px;
+        }
+
+        .section-heading h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: #244b31;
+        }
+
+        .section-heading p {
+            font-size: 10px;
+            color: #929d92;
+            margin-top: 3px;
+        }
+
+        /* INPUT GRID */
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .input-group {
+            min-width: 0;
+        }
+
+        .input-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            font-size: 11px;
+            font-weight: 700;
+            color: #43594a;
+
+            margin-bottom: 8px;
+        }
+
+        .input-group label .required {
+            color: #d66a53;
+        }
+
+        .input-group label .unit {
+            font-size: 9px;
+            color: #9ba69b;
+            font-weight: 500;
+            margin-left: 3px;
+        }
+
+        .input-control {
+            position: relative;
+        }
+
+        .input-control input,
+        .input-control select {
+            width: 100%;
+            height: 47px;
+
+            border: 1px solid #e3e9df;
+            border-radius: 11px;
+
+            background: #fbfcf9;
+            color: #314536;
+
+            padding: 0 13px;
+
+            outline: none;
+            font-size: 12px;
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+        .input-control input::placeholder {
+            color: #b2bbb1;
+            font-weight: 400;
+        }
+
+        .input-control select {
+            cursor: pointer;
+        }
+
+        .input-control input:focus,
+        .input-control select:focus {
+            border-color: #79a94f;
+            background: #fff;
+
+            box-shadow: 0 0 0 3px rgba(130, 179, 82, 0.13);
+        }
+
+        .input-control input:hover,
+        .input-control select:hover {
+            border-color: #b6c9a9;
+        }
+
+        .input-hint {
+            font-size: 9px;
+            color: #9aa49a;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* NUTRIENT INPUTS */
+
+        .nutrient-card {
+            padding: 15px;
+
+            background: #f8faf5;
+            border: 1px solid #edf1e9;
+            border-radius: 15px;
+        }
+
+        .nutrient-card .input-control input {
+            background: white;
+        }
+
+        .nutrient-card.nitrogen {
+            border-top: 3px solid #78a84c;
+        }
+
+        .nutrient-card.phosphorus {
+            border-top: 3px solid #d8a34e;
+        }
+
+        .nutrient-card.potassium {
+            border-top: 3px solid #7396c1;
+        }
+
+        .nutrient-symbol {
+            display: inline-grid;
+            place-items: center;
+
+            width: 25px;
+            height: 25px;
+
+            border-radius: 8px;
+
+            background: #e9f2e2;
+            color: #527d38;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            margin-right: 5px;
+        }
+
+        /* ERROR MESSAGE */
+
+        .error-message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+
+            padding: 14px 16px;
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            background: #fff0ed;
+            border: 1px solid #f5c8bf;
+
+            color: #a84332;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* SUBMIT BUTTON */
+
+        .submit-area {
+            margin-top: 25px;
+        }
+
+        .submit-button {
+            width: 100%;
+            min-height: 53px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+
+            border: none;
+            border-radius: 13px;
+
+            background: linear-gradient(110deg, #174d32, #286d3e);
+
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow: 0 8px 20px rgba(23, 77, 50, 0.19);
+
+            transition: 0.3s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow: 0 12px 25px rgba(23, 77, 50, 0.25);
+
+            background: linear-gradient(110deg, #103d27, #397d45);
+        }
+
+        .submit-button:active {
+            transform: scale(0.99);
+        }
+
+        .submit-button span {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .submit-button:hover span {
+            transform: translateX(5px);
+        }
+
+        .privacy-note {
+            text-align: center;
+            margin-top: 13px;
+
+            color: #9aa49a;
+            font-size: 10px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            padding: 0 15px 25px;
+
+            font-size: 11px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .footer strong {
+            color: var(--lime);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                max-width: 680px;
+            }
+
+            .side-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .side-steps {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .area-note {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            body {
+                background-attachment: scroll;
+            }
+
+            .navbar {
+                padding: 14px 0;
+            }
+
+            .brand-name {
+                font-size: 21px;
+            }
+
+            .brand-icon {
+                width: 37px;
+                height: 37px;
+                font-size: 21px;
+            }
+
+            .back-link {
+                padding: 9px 12px;
+                font-size: 11px;
+            }
+
+            .intro {
+                padding-top: 25px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .intro p {
+                font-size: 12px;
+            }
+
+            .main-layout {
+                width: 94%;
+                margin-top: 5px;
+            }
+
+            .side-panel {
+                padding: 20px;
+            }
+
+            .side-steps {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .form-container {
+                padding: 19px 15px;
+            }
+
+            .form-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .input-group.full {
+                grid-column: auto;
+            }
+
+            .nutrient-card {
+                padding: 13px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+            <div class="brand-icon">🌿</div>
+
+            <div class="brand-name">
+                Smart<span>Fert</span>
+            </div>
+        </a>
+
+        <a href="/" class="back-link">
+            ← Back to Home
+        </a>
+
+    </nav>
+
+
+    <section class="intro">
+
+        <div class="intro-label">
+            🌱 SMART FARMING ASSISTANT
+        </div>
+
+        <h1>
+            Find the Right <span>Fertilizer</span>
+        </h1>
+
+        <p>
+            Tell us about your field conditions and soil nutrients.
+            Our machine learning model will help identify a suitable fertilizer
+            for your crop.
+        </p>
+
+    </section>
+
+
+    <main class="main-layout">
+
+        <aside class="side-panel">
+
+            <div class="side-panel-content">
+
+                <div class="side-icon">🌾</div>
+
+                <h2>
+                    Your Field.<br>
+                    Smarter Decisions.
+                </h2>
+
+                <p>
+                    Provide the required field information to receive
+                    a machine-learning-based fertilizer recommendation.
+                </p>
+
+                <div class="side-divider"></div>
+
+                <div class="side-steps">
+
+                    <div class="side-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>Field Conditions</h3>
+                            <p>Enter temperature, humidity and moisture.</p>
+                        </div>
+                    </div>
+
+                    <div class="side-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>Crop Information</h3>
+                            <p>Select your soil type and crop.</p>
+                        </div>
+                    </div>
+
+                    <div class="side-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>Soil Nutrients</h3>
+                            <p>Provide nitrogen, phosphorus and potassium.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="area-note">
+                    <small>LAND AREA FOR ESTIMATION</small>
+                    <strong>1 Acre</strong>
+                    <span>Fixed area for fertilizer quantity and cost estimation.</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <section class="form-container">
+
+            <div class="form-top">
+                <h2>Field Information</h2>
+
+                <div class="required-note">
+                    <span>*</span> Required fields
+                </div>
+            </div>
+
+
+            <div class="progress-section">
+
+                <div class="progress-info">
+                    <span>Form completion</span>
+                    <span id="progressText">0% completed</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+            </div>
+
+
+            {% if error %}
+            <div class="error-message">
+                <span>⚠️</span>
+                <div>{{ error }}</div>
+            </div>
+            {% endif %}
+
+
+            <form method="POST" action="/recommend" id="fertilizerForm">
+
+
+                <!-- ENVIRONMENTAL CONDITIONS -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        <div class="section-icon">🌤️</div>
+
+                        <div>
+                            <h3>Environmental Conditions</h3>
+                            <p>Enter the current conditions of your field.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-grid">
+
+                        <div class="input-group">
+                            <label for="temperature">
+                                Temperature <span class="required">*</span>
+                                <span class="unit">°C</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="temperature"
+                                    name="temperature"
+                                    placeholder="e.g. 25"
+                                    step="any"
+                                    value="{{ request.form.get('temperature', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Current field temperature.</p>
+                        </div>
+
+
+                        <div class="input-group">
+                            <label for="humidity">
+                                Humidity <span class="required">*</span>
+                                <span class="unit">%</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="humidity"
+                                    name="humidity"
+                                    placeholder="e.g. 60"
+                                    min="0"
+                                    max="100"
+                                    step="any"
+                                    value="{{ request.form.get('humidity', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Relative atmospheric humidity.</p>
+                        </div>
+
+
+                        <div class="input-group full">
+                            <label for="moisture">
+                                Soil Moisture <span class="required">*</span>
+                                <span class="unit">%</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="moisture"
+                                    name="moisture"
+                                    placeholder="Enter soil moisture value"
+                                    min="0"
+                                    max="100"
+                                    step="any"
+                                    value="{{ request.form.get('moisture', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Moisture level of the field soil.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CROP AND SOIL -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        <div class="section-icon">🌱</div>
+
+                        <div>
+                            <h3>Crop & Soil Information</h3>
+                            <p>Choose the crop and soil category.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-grid">
+
+                        <div class="input-group">
+                            <label for="soil_type">
+                                Soil Type <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <select id="soil_type" name="soil_type" required>
+                                    <option value="">Select soil type</option>
+
+                                    {% for soil in soil_types %}
+                                    <option
+                                        value="{{ soil }}"
+                                        {% if request.form.get('soil_type') == soil %}selected{% endif %}
+                                    >
+                                        {{ soil }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <p class="input-hint">Select the soil category of your field.</p>
+                        </div>
+
+
+                        <div class="input-group">
+                            <label for="crop_type">
+                                Crop Type <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <select id="crop_type" name="crop_type" required>
+                                    <option value="">Select your crop</option>
+
+                                    {% for crop in crop_names %}
+                                    <option
+                                        value="{{ crop }}"
+                                        {% if request.form.get('crop_type') == crop %}selected{% endif %}
+                                    >
+                                        {{ crop }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <p class="input-hint">Choose the crop you are cultivating.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SOIL NUTRIENTS -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        <div class="section-icon">🧪</div>
+
+                        <div>
+                            <h3>Soil Nutrient Levels</h3>
+                            <p>Enter the available NPK values of your soil.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-grid">
+
+                        <div class="input-group nutrient-card nitrogen">
+                            <label for="nitrogen">
+                                <span class="nutrient-symbol">N</span>
+                                Nitrogen <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="nitrogen"
+                                    name="nitrogen"
+                                    placeholder="Enter N value"
+                                    min="0"
+                                    step="any"
+                                    value="{{ request.form.get('nitrogen', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Nitrogen nutrient value.</p>
+                        </div>
+
+
+                        <div class="input-group nutrient-card phosphorus">
+                            <label for="phosphorus">
+                                <span class="nutrient-symbol">P</span>
+                                Phosphorus <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="phosphorus"
+                                    name="phosphorus"
+                                    placeholder="Enter P value"
+                                    min="0"
+                                    step="any"
+                                    value="{{ request.form.get('phosphorus', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Phosphorus nutrient value.</p>
+                        </div>
+
+
+                        <div class="input-group nutrient-card potassium">
+                            <label for="potassium">
+                                <span class="nutrient-symbol">K</span>
+                                Potassium <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <input
+                                    type="number"
+                                    id="potassium"
+                                    name="potassium"
+                                    placeholder="Enter K value"
+                                    min="0"
+                                    step="any"
+                                    value="{{ request.form.get('potassium', '') }}"
+                                    required
+                                >
+                            </div>
+
+                            <p class="input-hint">Potassium nutrient value.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FARMING DETAILS -->
+
+                <div class="form-section">
+
+                    <div class="section-heading">
+                        <div class="section-icon">🚜</div>
+
+                        <div>
+                            <h3>Farming Details</h3>
+                            <p>Used for fertilizer quantity and cost estimation.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-grid">
+
+                        <div class="input-group">
+                            <label for="season">
+                                Growing Season <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <select id="season" name="season" required>
+                                    <option value="">Select season</option>
+
+                                    {% for season in seasons %}
+                                    <option
+                                        value="{{ season }}"
+                                        {% if request.form.get('season') == season %}selected{% endif %}
+                                    >
+                                        {{ season }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="input-group">
+                            <label for="production_condition">
+                                Production Condition <span class="required">*</span>
+                            </label>
+
+                            <div class="input-control">
+                                <select
+                                    id="production_condition"
+                                    name="production_condition"
+                                    required
+                                >
+                                    <option value="">Select condition</option>
+
+                                    {% for condition in conditions %}
+                                    <option
+                                        value="{{ condition }}"
+                                        {% if request.form.get('production_condition') == condition %}selected{% endif %}
+                                    >
+                                        {{ condition }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="input-group full">
+                            <label>Land Area</label>
+
+                            <div class="input-control">
+                                <input
+                                    type="text"
+                                    value="1 Acre"
+                                    readonly
+                                    style="background:#edf4e8; color:#527c42; font-weight:800;"
+                                >
+                            </div>
+
+                            <p class="input-hint">
+                                Quantity and cost estimates will be calculated for one acre.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <div class="submit-area">
+
+                    <button type="submit" class="submit-button">
+                        Predict Best Fertilizer
+                        <span>→</span>
+                    </button>
+
+                    <p class="privacy-note">
+                        🌿 Your inputs will be processed by the SmartFert ML recommendation system.
+                    </p>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        Powered by <strong>SmartFert Machine Learning System</strong>
+        · Smarter Farming for a Greener Future
+    </footer>
+
+</div>
+
+
+<script>
+
+    const form = document.getElementById("fertilizerForm");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+
+    const requiredFields = form.querySelectorAll(
+        "input[required], select[required]"
+    );
+
+    function updateProgress() {
+
+        let completed = 0;
+
+        requiredFields.forEach(field => {
+
+            if (field.value.trim() !== "" && field.checkValidity()) {
+                completed++;
+            }
+
+        });
+
+        const percentage = requiredFields.length
+            ? Math.round((completed / requiredFields.length) * 100)
+            : 0;
+
+        progressFill.style.width = percentage + "%";
+        progressText.textContent = percentage + "% completed";
+
+    }
+
+    requiredFields.forEach(field => {
+        field.addEventListener("input", updateProgress);
+        field.addEventListener("change", updateProgress);
+    });
+
+    updateProgress();
+
+</script>
+
+</body>
+</html>

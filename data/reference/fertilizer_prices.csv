@@ -1,0 +1,6 @@
+fertilizer_name,grade,price_per_kg_inr,price_basis,source,price_date,status
+Urea,46-0-0,6.00,45 kg bag - Rs. 270,Verified supplier bill,2026-11-08,Verified
+DAP,18-46-0,27.00,50 kg bag - Rs. 1350,Government price reference Kharif 2026,2026-08-07,Verified
+MOP,0-0-60,34.21,50 kg bag - Rs. 1710.54,Government reported average retail price 2025-26,2026-03-10,Verified
+SSP,0-16-0,8.40,50 kg bag - Rs. 420,TNAU published fertilizer price reference,2026-09-29,Verified
+TSP,0-46-0,,,,,Pending

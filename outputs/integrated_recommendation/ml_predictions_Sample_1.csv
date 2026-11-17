@@ -1,0 +1,4 @@
+rank,crop_category,ml_fertilizer_label,model_score_percent,composition_product,mapping_status,mapping_notes
+1,Paddy,DAP,22.0,DAP,Verified,Standard DAP grade
+2,Paddy,Urea,20.0,Urea,Verified,Standard urea grade
+3,Paddy,TSP,11.0,TSP,Verified,Standard TSP grade
